@@ -8,7 +8,7 @@
 
 #import "DDCollectionViewFlowLayout.h"
 
-@interface DDCollectionViewFlowLayout()<UIScrollViewDelegate>{
+@interface DDCollectionViewFlowLayout(){
     NSMutableArray			*sectionRects;
     NSMutableArray			*columnRectsInSection;
     
@@ -19,12 +19,6 @@
 @end
 
 @implementation DDCollectionViewFlowLayout
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    CGRect lastSectionRect = [[sectionRects lastObject] CGRectValue];
-    CGSize size = CGSizeMake(CGRectGetWidth(self.collectionView.frame),CGRectGetMaxY(lastSectionRect));
-    scrollView.contentSize = size;
-}
 
 - (CGSize)collectionViewContentSize {
     [super collectionViewContentSize];
@@ -220,7 +214,7 @@
     return itemAttrs;
 }
 
-- (NSIndexSet *)sectionIndexesInRect:(CGRect) aRect {
+- (NSIndexSet *)sectionIndexesInRect:(CGRect)aRect {
     CGRect theRect = aRect;
     NSMutableIndexSet *visibleIndexes = [[NSMutableIndexSet alloc] init];
     NSUInteger numberOfSections = self.collectionView.numberOfSections;
