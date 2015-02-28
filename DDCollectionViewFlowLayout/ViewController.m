@@ -31,9 +31,6 @@
     layout.delegate = self;
     [self.collectionView setCollectionViewLayout:layout];
     
-//    self.collectionView.delegate = self;
-//    self.collectionView.dataSource = self;
-    
     [self addSize:NO];
 }
 
@@ -41,16 +38,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - UIScrollView Delegate Methods
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//    if(self.collectionView.contentOffset.y > self.collectionView.contentSize.height - self.collectionView.frame.size.height){
-//        if(hasMore){
-//            [self addSize:YES];
-//        }
-//    }
-//}
 
 #pragma mark - UICollectionView DataSource Methods
 
@@ -90,7 +77,6 @@
     [loadingMoreIndicator startAnimating];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if(!isLoadingMore && hasMore){
-//            isLoadingMore = YES;
             [self addSize:YES];
         }
     });

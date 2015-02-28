@@ -98,6 +98,8 @@
                                                           withIndexPath:sectionPath];
     headerAttributes.frame = headerFrame;
     [headerFooterItemAttributes[UICollectionElementKindSectionHeader] addObject:headerAttributes];
+    
+    // add headerAttributes to layoutItemAttributes arrays
     if (headerFrame.size.height > 0)
         [layoutItemAttributes[section] addObject:headerAttributes];
     
@@ -120,7 +122,6 @@
         itemAttributes.frame = itemRect;
         [layoutItemAttributes[section] addObject:itemAttributes];
         [columnRectsInSection[section][destColumnIdx] addObject:[NSValue valueWithCGRect:itemRect]];
-        
     }
     
     // #3 Define the rect of the footer
@@ -142,6 +143,7 @@
     footerAttributes.frame = footerFrame;
     [headerFooterItemAttributes[UICollectionElementKindSectionFooter] addObject:footerAttributes];
     
+    // add headerAttributes to layoutItemAttributes arrays.
     if (footerFrame.size.height)
         [layoutItemAttributes[section] addObject:footerAttributes];
     
