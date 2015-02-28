@@ -84,7 +84,8 @@
     // #2: Define the rect of the header
     CGRect headerFrame;
     headerFrame.origin = sectionRect.origin;
-    headerFrame.size.width = sectionRect.size.width;
+    headerFrame.origin.x = 0.0f;
+    headerFrame.size.width = cView.contentSize.width;
     headerFrame.size.height = 0.0f;
     
     if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]){
