@@ -21,7 +21,8 @@
 @implementation DDCollectionViewFlowLayout
 
 - (CGSize)collectionViewContentSize {
-    [super collectionViewContentSize];
+   [super collectionViewContentSize];
+    
     CGRect lastSectionRect = [[sectionRects lastObject] CGRectValue];
     CGSize lastsize = CGSizeMake(CGRectGetWidth(self.collectionView.frame),CGRectGetMaxY(lastSectionRect));
     return lastsize;
@@ -34,43 +35,43 @@
     layoutItemAttributes = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     headerFooterItemAttributes = @{UICollectionElementKindSectionHeader:[NSMutableArray array], UICollectionElementKindSectionFooter:[NSMutableArray array]};
     
-    for (NSUInteger sectIdx = 0; sectIdx < numberOfSections; ++sectIdx) {
-        NSUInteger itemsInSection = [self.collectionView numberOfItemsInSection:sectIdx];
+    for (NSUInteger section = 0; section < numberOfSections; ++section) {
+        NSUInteger itemsInSection = [self.collectionView numberOfItemsInSection:section];
         [layoutItemAttributes addObject:[NSMutableArray array]];
-        [self prepareSectionLayout:sectIdx withNumberOfItems:itemsInSection];
+        [self prepareSectionLayout:section withNumberOfItems:itemsInSection];
     }
 }
 
-- (void)prepareSectionLayout:(NSUInteger)sectionIdx withNumberOfItems:(NSUInteger)numberOfItems{
+- (void)prepareSectionLayout:(NSUInteger)section withNumberOfItems:(NSUInteger)numberOfItems{
     UICollectionView *cView = self.collectionView;
     
     UIEdgeInsets sectionInsets = UIEdgeInsetsZero;
     
     if([self.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]){
-        sectionInsets = [self.delegate collectionView:cView layout:self insetForSectionAtIndex:sectionIdx];
+        sectionInsets = [self.delegate collectionView:cView layout:self insetForSectionAtIndex:section];
     }
     
     CGFloat lineSpacing = 0.0f;
     CGFloat interitemSpacing = 0.0f;
 
     if([self.delegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)]){
-        interitemSpacing = [self.delegate collectionView:cView layout:self minimumInteritemSpacingForSectionAtIndex:sectionIdx];
+        interitemSpacing = [self.delegate collectionView:cView layout:self minimumInteritemSpacingForSectionAtIndex:section];
     }
     
     if([self.delegate respondsToSelector:@selector(collectionView:layout:minimumLineSpacingForSectionAtIndex:)]){
-        lineSpacing = [self.delegate collectionView:cView layout:self minimumLineSpacingForSectionAtIndex:sectionIdx];
+        lineSpacing = [self.delegate collectionView:cView layout:self minimumLineSpacingForSectionAtIndex:section];
     }
     
-    NSIndexPath *sectionPath = [NSIndexPath indexPathWithIndex:sectionIdx];
+    NSIndexPath *sectionPath = [NSIndexPath indexPathForItem:0 inSection:section];
     
     // #1: Define the rect of the section
-    CGRect previousSectionRect = [self rectForSectionAtIndex:sectionIdx-1];
+    CGRect previousSectionRect = [self rectForSectionAtIndex:section - 1];
     CGRect sectionRect;
     sectionRect.origin.x = sectionInsets.left;
     sectionRect.origin.y = CGRectGetMaxY(previousSectionRect)+sectionInsets.top;
     
-    NSUInteger numberOfColumns = [self.delegate collectionView:cView layout:self numberOfColumnsInSection:sectionIdx];
-    sectionRect.size.width =	CGRectGetWidth(cView.frame) - (sectionInsets.left + sectionInsets.right);
+    NSUInteger numberOfColumns = [self.delegate collectionView:cView layout:self numberOfColumnsInSection:section];
+    sectionRect.size.width = CGRectGetWidth(cView.frame) - (sectionInsets.left + sectionInsets.right);
     
     CGFloat columnSpace = sectionRect.size.width - (interitemSpacing * (numberOfColumns-1));
     CGFloat columnWidth = (columnSpace/numberOfColumns);
@@ -78,7 +79,7 @@
     // store space for each column
     [columnRectsInSection addObject:[NSMutableArray arrayWithCapacity:numberOfColumns]];
     for (NSUInteger colIdx = 0; colIdx < numberOfColumns; ++colIdx)
-        [columnRectsInSection[sectionIdx] addObject:[NSMutableArray array]];
+        [columnRectsInSection[section] addObject:[NSMutableArray array]];
     
     // #2: Define the rect of the header
     CGRect headerFrame;
@@ -86,28 +87,28 @@
     headerFrame.size.width = sectionRect.size.width;
     headerFrame.size.height = 0.0f;
     
-    if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection: )]){
-        CGSize headerSize = [self.delegate collectionView:cView layout:self referenceSizeForHeaderInSection:sectionIdx];
+    if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]){
+        CGSize headerSize = [self.delegate collectionView:cView layout:self referenceSizeForHeaderInSection:section];
         headerFrame.size.height = headerSize.height;
         headerFrame.size.width = headerSize.width;
     }
     
     UICollectionViewLayoutAttributes *headerAttributes = [UICollectionViewLayoutAttributes
-                                                          layoutAttributesForSupplementaryViewOfKind: UICollectionElementKindSectionHeader
-                                                          withIndexPath: sectionPath];
+                                                          layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                                                          withIndexPath:sectionPath];
     headerAttributes.frame = headerFrame;
     [headerFooterItemAttributes[UICollectionElementKindSectionHeader] addObject:headerAttributes];
     if (headerFrame.size.height > 0)
-        [layoutItemAttributes[sectionIdx] addObject:headerAttributes];
+        [layoutItemAttributes[section] addObject:headerAttributes];
     
     // #3: Define the rect of the of each item
     for (NSInteger itemIdx = 0; itemIdx < numberOfItems; ++itemIdx) {
-        NSIndexPath *itemPath = [NSIndexPath indexPathForItem:itemIdx inSection:sectionIdx];
+        NSIndexPath *itemPath = [NSIndexPath indexPathForItem:itemIdx inSection:section];
         CGSize itemSize = [self.delegate collectionView:cView layout:self sizeForItemAtIndexPath:itemPath];
         
-        NSInteger destColumnIdx = [self preferredColumnIndexInSection:sectionIdx];
-        NSInteger destRowInColumn = [self numberOfItemsInColumn:destColumnIdx ofSection:sectionIdx];
-        CGFloat lastItemInColumnOffset = [self lastItemOffsetInColumn:destColumnIdx inSection:sectionIdx];
+        NSInteger destColumnIdx = [self preferredColumnIndexInSection:section];
+        NSInteger destRowInColumn = [self numberOfItemsInColumn:destColumnIdx ofSection:section];
+        CGFloat lastItemInColumnOffset = [self lastItemOffsetInColumn:destColumnIdx inSection:section];
         
         CGRect itemRect;
         itemRect.origin.x = sectionRect.origin.x + destColumnIdx * (interitemSpacing + columnWidth);
@@ -117,34 +118,34 @@
         
         UICollectionViewLayoutAttributes *itemAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemPath];
         itemAttributes.frame = itemRect;
-        [layoutItemAttributes[sectionIdx] addObject:itemAttributes];
-        [columnRectsInSection[sectionIdx][destColumnIdx] addObject:[NSValue valueWithCGRect:itemRect]];
+        [layoutItemAttributes[section] addObject:itemAttributes];
+        [columnRectsInSection[section][destColumnIdx] addObject:[NSValue valueWithCGRect:itemRect]];
         
-        //	NSLog(@"   Item %d (col %d) : %@",itemIdx,destColumnIdx,NSStringFromCGRect(itemRect));
     }
     
     // #3 Define the rect of the footer
     CGRect footerFrame;
     footerFrame.origin.x = headerFrame.origin.x;
-    footerFrame.origin.y = [self heightOfItemsInSection:sectionIdx] + lineSpacing;
+    footerFrame.origin.y = [self heightOfItemsInSection:section] + lineSpacing;
     footerFrame.size.width = headerFrame.size.width;
     footerFrame.size.height = 0.0f;
+    
     if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)]){
-        CGSize footerSize = [self.delegate collectionView:cView layout:self referenceSizeForFooterInSection:sectionIdx];
+        CGSize footerSize = [self.delegate collectionView:cView layout:self referenceSizeForFooterInSection:section];
         footerFrame.size.height = footerSize.height;
         footerFrame.size.width = footerSize.width;
     }
     
     UICollectionViewLayoutAttributes *footerAttributes = [UICollectionViewLayoutAttributes
-                                                          layoutAttributesForSupplementaryViewOfKind: UICollectionElementKindSectionFooter
-                                                          withIndexPath: sectionPath];
+                                                          layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                                                          withIndexPath:sectionPath];
     footerAttributes.frame = footerFrame;
     [headerFooterItemAttributes[UICollectionElementKindSectionFooter] addObject:footerAttributes];
     
     if (footerFrame.size.height)
-        [layoutItemAttributes[sectionIdx] addObject:footerAttributes];
+        [layoutItemAttributes[section] addObject:footerAttributes];
     
-    sectionRect.size.height = (CGRectGetMaxY(footerFrame) - CGRectGetMinY(headerFrame))+sectionInsets.bottom;
+    sectionRect.size.height = (CGRectGetMaxY(footerFrame) - CGRectGetMinY(headerFrame)) + sectionInsets.bottom;
     [sectionRects addObject:[NSValue valueWithCGRect:sectionRect]];
 }
 
@@ -187,20 +188,26 @@
 }
 
 - (CGRect)rectForSectionAtIndex:(NSInteger)sectionIdx {
-    if (sectionIdx < 0 || sectionIdx >= sectionRects.count) return CGRectZero;
+    if (sectionIdx < 0 || sectionIdx >= sectionRects.count)
+        return CGRectZero;
     return [sectionRects[sectionIdx] CGRectValue];
 }
 
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind
+                                                                     atIndexPath:(NSIndexPath *)indexPath {
     return headerFooterItemAttributes[kind][indexPath.section];
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return layoutItemAttributes[indexPath.section][indexPath.item];
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)visibleRect {
     return [self searchVisibleLayoutAttributesInRect:visibleRect];
 }
 
-- (NSArray *)searchVisibleLayoutAttributesInRect:(CGRect) visibleRect {
+- (NSArray *)searchVisibleLayoutAttributesInRect:(CGRect)visibleRect {
     NSMutableArray *itemAttrs = [[NSMutableArray alloc] init];
     NSIndexSet *visibleSections = [self sectionIndexesInRect:visibleRect];
     [visibleSections enumerateIndexesUsingBlock:^(NSUInteger sectionIdx, BOOL *stop) {

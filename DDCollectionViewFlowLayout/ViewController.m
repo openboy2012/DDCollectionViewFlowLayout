@@ -31,6 +31,9 @@
     layout.delegate = self;
     [self.collectionView setCollectionViewLayout:layout];
     
+//    self.collectionView.delegate = self;
+//    self.collectionView.dataSource = self;
+    
     [self addSize:NO];
 }
 
@@ -38,6 +41,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - UIScrollView Delegate Methods
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+//    if(self.collectionView.contentOffset.y > self.collectionView.contentSize.height - self.collectionView.frame.size.height){
+//        if(hasMore){
+//            [self addSize:YES];
+//        }
+//    }
+//}
 
 #pragma mark - UICollectionView DataSource Methods
 
@@ -56,7 +69,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
     UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
-    lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.row];
+    lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
     cell.backgroundColor = dataList[indexPath.row][@"color"];
     return cell;
 }
@@ -77,7 +90,7 @@
     [loadingMoreIndicator startAnimating];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if(!isLoadingMore && hasMore){
-            isLoadingMore = YES;
+//            isLoadingMore = YES;
             [self addSize:YES];
         }
     });
@@ -110,20 +123,30 @@
 
 
 - (void)addSize:(BOOL)isMore{
-    NSMutableArray *indexPaths = [NSMutableArray array];
-    NSInteger item = dataList.count;
-    for (int i = 1; i < 20; ++i ) {
-        NSDictionary *dict = @{@"size":[NSValue valueWithCGSize:CGSizeMake(150.0, 150.0 + rand()%30)],
-                               @"color":[UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f]};
-        [dataList addObject:dict];
-        [indexPaths addObject:[NSIndexPath indexPathForItem:item + i -1 inSection:0]];
-    }
-    isLoadingMore = NO;
-    hasMore = YES;
-    if(isMore){
-        [self.collectionView insertItemsAtIndexPaths:indexPaths];
-    }else
-        [self.collectionView reloadData];
+    if(isLoadingMore)
+        return;
+    isLoadingMore = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSMutableArray *indexPaths = [NSMutableArray array];
+        NSInteger item = dataList.count;
+        for (int i = 0; i < 20; ++i ) {
+            NSDictionary *dict = @{@"size":[NSValue valueWithCGSize:CGSizeMake(150.0, 150.0 + rand()%30)],
+                                   @"color":[UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f]};
+            [dataList addObject:dict];
+            [indexPaths addObject:[NSIndexPath indexPathForItem:item + i inSection:0]];
+        }
+        if(isMore){
+            [self.collectionView insertItemsAtIndexPaths:indexPaths];
+        }else
+            [self.collectionView reloadData];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            isLoadingMore = NO;
+            hasMore = YES;
+        });
+    });
+
+
 }
 
 @end
