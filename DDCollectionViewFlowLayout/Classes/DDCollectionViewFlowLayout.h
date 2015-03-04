@@ -10,7 +10,7 @@
 
 @class  DDCollectionViewFlowLayout;
 
-@protocol DDCollectionViewFlowLayoutDelegate <UICollectionViewDelegateFlowLayout>
+@protocol DDCollectionViewDelegateFlowLayout <UICollectionViewDelegateFlowLayout>
 
 @required
 /**
@@ -31,6 +31,6 @@
 
 @interface DDCollectionViewFlowLayout : UICollectionViewFlowLayout
 
-@property (nonatomic, weak) id<DDCollectionViewFlowLayoutDelegate> delegate;
+@property (nonatomic, weak) id<DDCollectionViewDelegateFlowLayout> delegate;
 
 @end

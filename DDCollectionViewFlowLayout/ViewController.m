@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "DDCollectionViewFlowLayout.h"
 
-@interface ViewController ()<DDCollectionViewFlowLayoutDelegate,UICollectionViewDataSource>{
+@interface ViewController ()<DDCollectionViewDelegateFlowLayout,UICollectionViewDataSource>{
     NSMutableArray *dataList;
     BOOL isLoadingMore;
     BOOL hasMore;
