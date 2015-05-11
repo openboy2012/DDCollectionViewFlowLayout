@@ -8,9 +8,11 @@
 
 #import "ViewController.h"
 #import "DDCollectionViewFlowLayout.h"
+#import <MJRefresh.h>
 
 @interface ViewController ()<DDCollectionViewDelegateFlowLayout,UICollectionViewDataSource>{
     NSMutableArray *dataList;
+    NSMutableArray *data2;
     BOOL isLoadingMore;
     BOOL hasMore;
     UIActivityIndicatorView *loadingMoreIndicator;
@@ -26,12 +28,21 @@
     if(!dataList)
         dataList = [[NSMutableArray alloc] initWithCapacity:0];
     [dataList removeAllObjects];
+    
+    if(!data2)
+        data2 = [[NSMutableArray alloc] initWithCapacity:0];
+    [data2 removeAllObjects];
 
     DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
     layout.delegate = self;
     [self.collectionView setCollectionViewLayout:layout];
     
     [self addSize:NO];
+    
+//    __weak typeof(self) weakOfSelf = self;
+//    [self.collectionView addLegendFooterWithRefreshingBlock:^{
+//        [weakOfSelf addSize:YES];
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,11 +53,13 @@
 #pragma mark - UICollectionView DataSource Methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return dataList.count;
+    if(section == 1)
+        return dataList.count;
+    return data2.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)layout numberOfColumnsInSection:(NSInteger)section{
@@ -54,33 +67,35 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
-    UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
-    lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
-    cell.backgroundColor = dataList[indexPath.row][@"color"];
-    return cell;
+    if(indexPath.section == 1){
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
+        UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
+        lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
+        cell.backgroundColor = dataList[indexPath.row][@"color"];
+        return cell;
+    }else{
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
+        UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
+        lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
+        cell.backgroundColor = [UIColor yellowColor];
+        return cell;
+    }
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
-    if(!hasMore){
-        [loadingMoreIndicator stopAnimating];
-        [loadingMoreIndicator removeFromSuperview];
-        loadingMoreIndicator = nil;
+    if(kind == UICollectionElementKindSectionHeader){
+        UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
+        header.backgroundColor = [UIColor greenColor];
+        return header;
+    }else if(kind == UICollectionElementKindSectionFooter){
+        UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
+        footer.backgroundColor = [UIColor blueColor];
+//        if(!isLoadingMore){
+//            [self addSize:YES];
+//        }
         return footer;
     }
-    if(!loadingMoreIndicator)
-        loadingMoreIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0.0, 0.0, 20.0, 20.0f)];
-    loadingMoreIndicator.center = CGPointMake(footer.center.x, 15.0f);
-    loadingMoreIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [footer addSubview:loadingMoreIndicator];
-    [loadingMoreIndicator startAnimating];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if(!isLoadingMore && hasMore){
-            [self addSize:YES];
-        }
-    });
-    return footer;
+    return nil;
 }
 
 #pragma mark - UICollectionView Delegate Methods
@@ -94,15 +109,23 @@
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(6.0f, 6.0, 0.0, 6.0f);
+    if(section == 0)
+        return UIEdgeInsetsMake(6.0f, 6.0f, 6.0f, 6.0f);
+    return UIEdgeInsetsMake(6, 6, 6, 6);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return [dataList[indexPath.row][@"size"] CGSizeValue];
+    if(indexPath.section == 1)
+        return [dataList[indexPath.row][@"size"] CGSizeValue];
+    return CGSizeMake(150, 150);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    return CGSizeMake(self.view.bounds.size.width, 55);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-    return CGSizeMake(self.view.bounds.size.width, 44.0f);
+    return CGSizeMake(self.view.bounds.size.width, 55);
 }
 
 #pragma mark - dataSource methods
@@ -121,6 +144,10 @@
             [dataList addObject:dict];
             [indexPaths addObject:[NSIndexPath indexPathForItem:item + i inSection:0]];
         }
+        for (int i = 0; i < 10; ++i ) {
+            [data2 addObject:@(i)];
+        }
+        [self.collectionView.legendFooter endRefreshing];
         if(isMore){
             [self.collectionView insertItemsAtIndexPaths:indexPaths];
         }else
@@ -131,8 +158,43 @@
             hasMore = YES;
         });
     });
+}
 
+- (IBAction)segmentControl:(id)sender{
+    [self.collectionView removeFooter];
+    [dataList removeAllObjects];
+    [data2 removeAllObjects];
+    [self.collectionView reloadData];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if([(UISegmentedControl *)sender selectedSegmentIndex] == 0){
+            UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+            [self.collectionView setCollectionViewLayout:layout];
+        }else{
+            DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
+            layout.delegate = self;
+            [self.collectionView setCollectionViewLayout:layout];
+            __weak typeof(self) weakOfSelf = self;
+            [self.collectionView addLegendFooterWithRefreshingBlock:^{
+                [weakOfSelf addMore];
+            }];
+        }
+        [self addSize:NO];
+        [self.collectionView reloadData];
 
+    });
+}
+
+- (void)addMore{
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    NSInteger item = dataList.count;
+    for (int i = 0; i < 20; ++i ) {
+        NSDictionary *dict = @{@"size":[NSValue valueWithCGSize:CGSizeMake(150.0, 150.0 + rand()%30)],
+                               @"color":[UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f]};
+        [dataList addObject:dict];
+        [indexPaths addObject:[NSIndexPath indexPathForItem:item + i inSection:1]];
+    }
+    [self.collectionView.legendFooter endRefreshing];
+    [self.collectionView insertItemsAtIndexPaths:indexPaths];
 }
 
 @end
