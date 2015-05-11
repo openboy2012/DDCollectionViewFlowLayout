@@ -132,9 +132,7 @@
         itemRect.origin.y = lastItemInColumnOffset + (destRowInColumn > 0 ? lineSpacing: sectionInsets.top);
         itemRect.size.width = columnWidth;
         itemRect.size.height = itemSize.height;
-        
-        itemRect = CGRectIntegral(itemRect);
-        
+                
         UICollectionViewLayoutAttributes *itemAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemPath];
         itemAttributes.frame = itemRect;
         [layoutItemAttributes[section] addObject:itemAttributes];
@@ -269,9 +267,8 @@
     return visibleIndexes;
 }
 
-//- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
-//{
-//    return YES;
-//}
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
+    return YES;
+}
 
 @end

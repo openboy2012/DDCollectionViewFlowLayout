@@ -40,6 +40,9 @@
     [self.collectionView addLegendFooterWithRefreshingBlock:^{
         [weakOfSelf addMore];
     }];
+    [self.collectionView addLegendHeaderWithRefreshingBlock:^{
+        [weakOfSelf setData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,8 +57,10 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if(section == [self numberOfSectionsInCollectionView:collectionView] - 1)
+    if(section == [self numberOfSectionsInCollectionView:collectionView] - 1){
+//        NSLog(@"dataList.count = %d",(int)dataList.count);
         return dataList.count;
+    }
     return sectionOne.count;
 }
 
@@ -68,6 +73,7 @@
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
         UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
         lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
+        NSLog(@"lblTitle = %@",lblTitle.text);
         cell.backgroundColor = dataList[indexPath.row][@"color"];
         return cell;
     }else{
@@ -132,20 +138,21 @@
         [dataList addObject:dict];
         [sectionOne addObject:dict];
     }
+    [self.collectionView.header endRefreshing];
     [self.collectionView reloadData];
 }
 
-- (IBAction)segmentControl:(id)sender{
-    if([(UISegmentedControl *)sender selectedSegmentIndex] == 0){
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        [self.collectionView setCollectionViewLayout:layout];
-    }else{
-        DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
-        layout.delegate = self;
-        [self.collectionView setCollectionViewLayout:layout];
-    }
-    [self setData];
-}
+//- (IBAction)segmentControl:(id)sender{
+//    if([(UISegmentedControl *)sender selectedSegmentIndex] == 0){
+//        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+//        [self.collectionView setCollectionViewLayout:layout];
+//    }else{
+//        DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
+//        layout.delegate = self;
+//        [self.collectionView setCollectionViewLayout:layout];
+//    }
+//    [self setData];
+//}
 
 - (void)addMore{
     NSMutableArray *indexPaths = [NSMutableArray array];
@@ -156,8 +163,11 @@
         [dataList addObject:dict];
         [indexPaths addObject:[NSIndexPath indexPathForItem:item + i inSection:[self numberOfSectionsInCollectionView:self.collectionView] - 1]];
     }
-    [self.collectionView.legendFooter endRefreshing];
+//    NSLog(@"indexPaths = %@",indexPaths);
     [self.collectionView insertItemsAtIndexPaths:indexPaths];
+//    [self.collectionView reloadData];
+    
+    [self.collectionView.legendFooter endRefreshing];
 }
 
 @end

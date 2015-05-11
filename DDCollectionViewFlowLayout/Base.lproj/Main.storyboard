@@ -69,17 +69,6 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="VOn-9l-dzX">
                         <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="zv5-og-TuI">
-                            <rect key="frame" x="34" y="7" width="252" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Normal"/>
-                                <segment title="Custom"/>
-                            </segments>
-                            <connections>
-                                <action selector="segmentControl:" destination="aJz-e2-7Hj" eventType="valueChanged" id="tRU-GA-5m9"/>
-                            </connections>
-                        </segmentedControl>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="mnY-8n-ISO" id="tZa-tp-hU6"/>
