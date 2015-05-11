@@ -23,11 +23,8 @@
 - (CGSize)collectionViewContentSize {
     [super collectionViewContentSize];
     
-    DDLog(@"super collectionViewContentSize = %@",[NSValue valueWithCGSize:[super collectionViewContentSize]]);
-    
     CGRect lastSectionRect = [[sectionRects lastObject] CGRectValue];
-    CGSize lastSize = CGSizeMake(CGRectGetWidth(self.collectionView.bounds),CGRectGetMaxY(lastSectionRect));
-    DDLog(@"lastSize = %@",[NSValue valueWithCGSize:lastSize]);
+    CGSize lastSize = CGSizeMake(CGRectGetWidth(self.collectionView.bounds), CGRectGetMaxY(lastSectionRect));
     return lastSize;
 }
 
@@ -58,7 +55,6 @@
     CGRect sectionRect;
     sectionRect.origin.y = CGRectGetHeight(previousSectionRect) + CGRectGetMinY(previousSectionRect);
     
-    DDLog(@"section = %d previousSectionRect = %@ origin.y = %d",(int)section,[NSValue valueWithCGRect:previousSectionRect],(int)CGRectGetHeight(previousSectionRect));
     
     if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]){
         
@@ -76,8 +72,6 @@
          layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader
          withIndexPath:indexPath];
         headerAttributes.frame = headerFrame;
-        
-        DDLog(@"section = %d, headerFrame = %@",(int)section,[NSValue valueWithCGRect:headerFrame]);
         
         headerHeight = headerFrame.size.height;
         [headerFooterItemAttributes[UICollectionElementKindSectionHeader] setObject:headerAttributes forKey:[NSString stringWithFormat:@"section%d",(int)section]];
@@ -149,7 +143,6 @@
     
     itemsContentRect.size.height = [self heightOfItemsInSection:indexPath.section] + sectionInsets.bottom;
     
-    DDLog(@"section = %d itemContentRect = %@", (int)section, [NSValue valueWithCGRect:itemsContentRect]);
     CGFloat footerHeight = 0.0f;
     
     if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)]){
@@ -161,8 +154,6 @@
         footerFrame.size.height = footerSize.height;
         footerFrame.size.width = footerSize.width;
         
-        DDLog(@"section = %d footerFrame = %@", (int)section, [NSValue valueWithCGRect:footerFrame]);
-
         UICollectionViewLayoutAttributes *footerAttributes = [UICollectionViewLayoutAttributes
                                                               layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                                               withIndexPath:indexPath];
@@ -184,7 +175,6 @@
     sectionRect.origin.x = 0;
     sectionRect.size.width = cView.bounds.size.width;
     
-    DDLog(@"section = %d sectionRect = %@", (int)section, [NSValue valueWithCGRect:sectionRect]);
     [sectionRects addObject:[NSValue valueWithCGRect:sectionRect]];
 }
 
@@ -195,7 +185,6 @@
         CGFloat heightOfColumn = [self lastItemOffsetInColumn:columnIdx inSection:sectionIdx];
         maxHeightBetweenColumns = MAX(maxHeightBetweenColumns, heightOfColumn);
     }
-    NSLog(@"section = %d, maxHeight = %f",(int)sectionIdx, maxHeightBetweenColumns);
     return maxHeightBetweenColumns;
 }
 
@@ -208,7 +197,6 @@
     if (itemsInColumn.count == 0) {
         if(headerFooterItemAttributes[UICollectionElementKindSectionHeader][[NSString stringWithFormat:@"section%d",(int)sectionIdx]]){
             CGRect headerFrame = [headerFooterItemAttributes[UICollectionElementKindSectionHeader][[NSString stringWithFormat:@"section%d",(int)sectionIdx]] frame];
-            DDLog(@"section = %d, origin y = %f", (int)sectionIdx,headerFrame.size.height);
             return headerFrame.size.height;
         }
         return 0.0f;
@@ -240,7 +228,6 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind
                                                                      atIndexPath:(NSIndexPath *)indexPath {
-//    DDLog(@"headerFooterItemAttributes = %@", headerFooterItemAttributes);
     if(headerFooterItemAttributes[kind][[NSString stringWithFormat:@"section%d",(int)indexPath.section]]){
         return headerFooterItemAttributes[kind][[NSString stringWithFormat:@"section%d",(int)indexPath.section]];
     }
@@ -281,5 +268,10 @@
     }
     return visibleIndexes;
 }
+
+//- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+//{
+//    return YES;
+//}
 
 @end
