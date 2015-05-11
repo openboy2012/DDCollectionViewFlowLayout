@@ -55,7 +55,6 @@
     CGRect sectionRect;
     sectionRect.origin.y = CGRectGetHeight(previousSectionRect) + CGRectGetMinY(previousSectionRect);
     
-    
     if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]){
         
         // #2: Define the rect of the header
@@ -75,8 +74,8 @@
         
         headerHeight = headerFrame.size.height;
         [headerFooterItemAttributes[UICollectionElementKindSectionHeader] setObject:headerAttributes forKey:[NSString stringWithFormat:@"section%d",(int)section]];
-        
-        [layoutItemAttributes[section] addObject:headerAttributes];
+
+//        [layoutItemAttributes[section] addObject:headerAttributes];
     }
 
     //# get the insets of section
@@ -161,7 +160,7 @@
         
         [headerFooterItemAttributes[UICollectionElementKindSectionFooter] setObject:footerAttributes forKey:[NSString stringWithFormat:@"section%d",(int)section]];
         
-        [layoutItemAttributes[section] addObject:footerAttributes];
+//        [layoutItemAttributes[section] addObject:footerAttributes];
     }
     
     if(section > 0){
@@ -244,12 +243,27 @@
     NSMutableArray *itemAttrs = [[NSMutableArray alloc] init];
     NSIndexSet *visibleSections = [self sectionIndexesInRect:rect];
     [visibleSections enumerateIndexesUsingBlock:^(NSUInteger sectionIdx, BOOL *stop) {
+        //# header
+        UICollectionViewLayoutAttributes *headerAttribute = headerFooterItemAttributes[UICollectionElementKindSectionHeader][[NSString stringWithFormat:@"section%d",(int)sectionIdx]];
+        CGRect itemRect = headerAttribute.frame;
+        BOOL isVisibleHeader = CGRectIntersectsRect(rect, itemRect);
+        if (isVisibleHeader && headerAttribute)
+            [itemAttrs addObject:headerAttribute];
+        
+        //# itemContent
         for (UICollectionViewLayoutAttributes *itemAttr in layoutItemAttributes[sectionIdx]) {
             CGRect itemRect = itemAttr.frame;
             BOOL isVisible = CGRectIntersectsRect(rect, itemRect);
             if (isVisible)
                 [itemAttrs addObject:itemAttr];
         }
+        
+        //# footer
+        UICollectionViewLayoutAttributes *footerAttribute = headerFooterItemAttributes[UICollectionElementKindSectionFooter][[NSString stringWithFormat:@"section%d",(int)sectionIdx]];
+        itemRect = footerAttribute.frame;
+        BOOL isVisible = CGRectIntersectsRect(rect, itemRect);
+        if (isVisible && footerAttribute)
+            [itemAttrs addObject:footerAttribute];
     }];
     return itemAttrs;
 }
