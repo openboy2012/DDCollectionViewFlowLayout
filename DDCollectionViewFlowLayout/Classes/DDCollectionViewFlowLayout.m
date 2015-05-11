@@ -186,7 +186,7 @@
 - (CGFloat)lastItemOffsetInColumn:(NSInteger)columnIdx inSection:(NSInteger)sectionIdx {
     NSArray *itemsInColumn = columnRectsInSection[sectionIdx][columnIdx];
     if (itemsInColumn.count == 0) {
-        if(headerFooterItemAttributes[UICollectionElementKindSectionHeader][sectionIdx]){
+        if([headerFooterItemAttributes[UICollectionElementKindSectionHeader] count] > sectionIdx){
             CGRect headerFrame = [headerFooterItemAttributes[UICollectionElementKindSectionHeader][sectionIdx] frame];
             return headerFrame.size.height;
         }
@@ -235,10 +235,10 @@
     NSIndexSet *visibleSections = [self sectionIndexesInRect:rect];
     [visibleSections enumerateIndexesUsingBlock:^(NSUInteger sectionIdx, BOOL *stop) {
         //# header
-        UICollectionViewLayoutAttributes *headerAttribute = headerFooterItemAttributes[UICollectionElementKindSectionHeader][sectionIdx];
-        if(headerAttribute){
+        if([headerFooterItemAttributes[UICollectionElementKindSectionHeader] count] > sectionIdx){
+            UICollectionViewLayoutAttributes *headerAttribute = headerFooterItemAttributes[UICollectionElementKindSectionHeader][sectionIdx];
             BOOL isVisibleHeader = CGRectIntersectsRect(rect, headerAttribute.frame);
-            if (isVisibleHeader)
+            if (isVisibleHeader && headerAttribute)
                 [itemAttrs addObject:headerAttribute];
         }
         
@@ -251,10 +251,10 @@
         }
         
         //# footer
-        UICollectionViewLayoutAttributes *footerAttribute = headerFooterItemAttributes[UICollectionElementKindSectionFooter][sectionIdx];
-        if(footerAttribute){
+        if([headerFooterItemAttributes[UICollectionElementKindSectionHeader] count] > sectionIdx){
+            UICollectionViewLayoutAttributes *footerAttribute = headerFooterItemAttributes[UICollectionElementKindSectionFooter][sectionIdx];
             BOOL isVisible = CGRectIntersectsRect(rect, footerAttribute.frame);
-            if (isVisible)
+            if (isVisible && footerAttribute)
                 [itemAttrs addObject:footerAttribute];
         }
     }];
