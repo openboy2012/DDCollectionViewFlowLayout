@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name     = 'DDCollectionViewFlowLayout'
- s.version  = '0.4.2'
+ s.version  = '0.5'
  s.license  = 'MIT'
  s.summary  = 'a CollectionViewFlowLayout implement the Waterfall Effect'
  s.homepage = 'https://github.com/openboy2012/DDCollectionViewFlowLayout.git'

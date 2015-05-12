@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "DDCollectionViewFlowLayout.h"
-#import <MJRefresh.h>
+#import "MJRefresh.h"
 
 @interface ViewController ()<DDCollectionViewDelegateFlowLayout,UICollectionViewDataSource>{
     NSMutableArray *dataList;
