@@ -40,4 +40,6 @@
 
 @property (nonatomic, weak) id<DDCollectionViewDelegateFlowLayout> delegate;
 
+@property (nonatomic) BOOL enableStickyHeaders; //Defalut is NO, set it's YES will sticky the section header
+
 @end

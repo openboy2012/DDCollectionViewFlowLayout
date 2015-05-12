@@ -10,7 +10,6 @@
 		0BF856CDDD1F43F1E454CDB2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F34FB4688796BD47CBE10B51 /* libPods.a */; };
 		8E0F63B21AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8E0F63AF1AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec */; };
 		8E0F63B31AA1836400B75A4F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8E0F63B01AA1836400B75A4F /* LICENSE */; };
-		8E0F63B41AA1836400B75A4F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 8E0F63B11AA1836400B75A4F /* README.md */; };
 		8E6565191A8C40610028E793 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6565181A8C40610028E793 /* main.m */; };
 		8E65651C1A8C40610028E793 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65651B1A8C40610028E793 /* AppDelegate.m */; };
 		8E65651F1A8C40610028E793 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65651E1A8C40610028E793 /* ViewController.m */; };
@@ -35,7 +34,6 @@
 		7AB5F702E95C41A58CD65280 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8E0F63AF1AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DDCollectionViewFlowLayout.podspec; sourceTree = "<group>"; };
 		8E0F63B01AA1836400B75A4F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		8E0F63B11AA1836400B75A4F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8E6565131A8C40610028E793 /* DDCollectionViewFlowLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDCollectionViewFlowLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6565171A8C40610028E793 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E6565181A8C40610028E793 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 			children = (
 				8E0F63AF1AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec */,
 				8E0F63B01AA1836400B75A4F /* LICENSE */,
-				8E0F63B11AA1836400B75A4F /* README.md */,
 				8E6565151A8C40610028E793 /* DDCollectionViewFlowLayout */,
 				8E65652F1A8C40610028E793 /* DDCollectionViewFlowLayoutTests */,
 				8E6565141A8C40610028E793 /* Products */,
@@ -304,7 +301,6 @@
 			files = (
 				8E65653F1A8C41410028E793 /* DDCollectionViewFlowLayout.m in Sources */,
 				8E65651F1A8C40610028E793 /* ViewController.m in Sources */,
-				8E0F63B41AA1836400B75A4F /* README.md in Sources */,
 				8E65651C1A8C40610028E793 /* AppDelegate.m in Sources */,
 				8E6565191A8C40610028E793 /* main.m in Sources */,
 			);

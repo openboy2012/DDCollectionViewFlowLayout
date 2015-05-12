@@ -32,6 +32,7 @@
 
     DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
     layout.delegate = self;
+    layout.enableStickyHeaders = YES;
     [self.collectionView setCollectionViewLayout:layout];
     
     [self setData];
@@ -53,7 +54,7 @@
 #pragma mark - UICollectionView DataSource Methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 2;
+    return 4;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -118,13 +119,13 @@
     return CGSizeMake(150, 150);
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return CGSizeMake(self.view.bounds.size.width, 44);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+//    return CGSizeMake(self.view.bounds.size.width, 44);
+//}
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-    return CGSizeMake(self.view.bounds.size.width, 44);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+//    return CGSizeMake(self.view.bounds.size.width, 44);
+//}
 
 #pragma mark - dataSource methods
 
@@ -132,7 +133,7 @@
 - (void)setData{
     [dataList removeAllObjects];
     [sectionOne removeAllObjects];
-    for (int i = 0; i < 10; ++i ) {
+    for (int i = 0; i < 8; ++i ) {
         NSDictionary *dict = @{@"size":[NSValue valueWithCGSize:CGSizeMake(150.0, 150.0 + rand()%30)],
                                @"color":[UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f]};
         [dataList addObject:dict];
@@ -158,7 +159,7 @@
     NSMutableArray *indexPaths = [NSMutableArray array];
     NSInteger item = dataList.count;
     for (int i = 0; i < 10; ++i ) {
-        NSDictionary *dict = @{@"size":[NSValue valueWithCGSize:CGSizeMake(150.0, 150.0 + rand()%30)],
+        NSDictionary *dict = @{@"size":[NSValue valueWithCGSize:CGSizeMake(150.0, 150.0)],
                                @"color":[UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f]};
         [dataList addObject:dict];
         [indexPaths addObject:[NSIndexPath indexPathForItem:item + i inSection:[self numberOfSectionsInCollectionView:self.collectionView] - 1]];
