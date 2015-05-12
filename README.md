@@ -1,5 +1,6 @@
 # DDCollectionViewFlowLayout
-a CollectionViewFlowLayout implement the Waterfall Effect
+a CollectionViewFlowLayout implement the Waterfall Effect, it's also supported mutiple sections.  
+you can custom the header & footer, you also can custom the UICollectionViewCell.   
 
 ##Effects
 <img src="http://ipa-download.qiniudn.com/loadingmore.gif" width="276"/>
