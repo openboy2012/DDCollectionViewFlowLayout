@@ -89,11 +89,15 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if(kind == UICollectionElementKindSectionHeader){
         UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
-        header.backgroundColor = [UIColor greenColor];
+        header.backgroundColor = [UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f];
+        UILabel *lblTitle = (UILabel *)[header viewWithTag:2];
+        lblTitle.text = [NSString stringWithFormat:@"Header %d",(int)indexPath.section + 1];
         return header;
     }else if(kind == UICollectionElementKindSectionFooter){
         UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
-        footer.backgroundColor = [UIColor blueColor];
+        footer.backgroundColor = [UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f];
+        UILabel *lblTitle = (UILabel *)[footer viewWithTag:2];
+        lblTitle.text = [NSString stringWithFormat:@"Footer %d",(int)indexPath.section + 1];
         return footer;
     }
     return nil;
@@ -119,13 +123,13 @@
     return CGSizeMake(150, 150);
 }
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-//    return CGSizeMake(self.view.bounds.size.width, 44);
-//}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    return CGSizeMake(self.view.bounds.size.width, 44);
+}
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-//    return CGSizeMake(self.view.bounds.size.width, 44);
-//}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+    return CGSizeMake(self.view.bounds.size.width, 44);
+}
 
 #pragma mark - dataSource methods
 

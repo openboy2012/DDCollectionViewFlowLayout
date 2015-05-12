@@ -15,7 +15,7 @@
     NSMutableArray			*layoutItemAttributes;
     NSDictionary            *headerFooterItemAttributes;
     
-    NSMutableArray          *sectionInsets;
+    NSMutableArray          *sectionInsetses;
     
     UIEdgeInsets            currentEdgeInsets;
 }
@@ -37,7 +37,7 @@
     sectionRects = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     columnRectsInSection = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     layoutItemAttributes = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
-    sectionInsets = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
+    sectionInsetses = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     headerFooterItemAttributes = @{UICollectionElementKindSectionHeader:[NSMutableArray array], UICollectionElementKindSectionFooter:[NSMutableArray array]};
     
     for (NSUInteger section = 0; section < numberOfSections; ++section) {
@@ -89,7 +89,7 @@
         sectionInset = [self.delegate collectionView:cView layout:self insetForSectionAtIndex:section];
     }
     
-    [sectionInsets addObject:[NSValue valueWithUIEdgeInsets:sectionInset]];
+    [sectionInsetses addObject:[NSValue valueWithUIEdgeInsets:sectionInset]];
     
     CGRect itemsContentRect;
     
@@ -259,7 +259,7 @@
                 [itemAttrs addObject:footerAttribute];
             currentEdgeInsets = UIEdgeInsetsZero;
         }else{
-            currentEdgeInsets = [sectionInsets[sectionIdx] UIEdgeInsetsValue];
+            currentEdgeInsets = [sectionInsetses[sectionIdx] UIEdgeInsetsValue];
         }
         
         //# header
