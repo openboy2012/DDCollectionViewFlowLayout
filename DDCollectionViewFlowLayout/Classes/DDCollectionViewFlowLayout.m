@@ -24,6 +24,8 @@
 
 @implementation DDCollectionViewFlowLayout
 
+#pragma mark - UISubclassingHooks Category Methods
+
 - (CGSize)collectionViewContentSize {
     [super collectionViewContentSize];
     
@@ -33,6 +35,7 @@
 }
 
 - (void)prepareLayout{
+    
     NSUInteger numberOfSections = self.collectionView.numberOfSections;
     sectionRects = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     columnRectsInSection = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
@@ -46,6 +49,25 @@
         [self prepareSectionLayout:section withNumberOfItems:itemsInSection];
     }
 }
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind
+                                                                     atIndexPath:(NSIndexPath *)indexPath {
+    return headerFooterItemAttributes[kind][indexPath.section];
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return layoutItemAttributes[indexPath.section][indexPath.item];
+}
+
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    return [self searchVisibleLayoutAttributesInRect:rect];
+}
+
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
+    return YES;
+}
+
+#pragma mark - Private Methods
 
 - (void)prepareSectionLayout:(NSUInteger)section withNumberOfItems:(NSUInteger)numberOfItems{
     UICollectionView *cView = self.collectionView;
@@ -223,20 +245,7 @@
     return [sectionRects[sectionIdx] CGRectValue];
 }
 
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind
-                                                                     atIndexPath:(NSIndexPath *)indexPath {
-    return headerFooterItemAttributes[kind][indexPath.section];
-}
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return layoutItemAttributes[indexPath.section][indexPath.item];
-}
-
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
-    return [self searchVisibleLayoutAttributesInRect:rect];
-}
-
+#pragma mark - Show Attributes Methods
 - (NSArray *)searchVisibleLayoutAttributesInRect:(CGRect)rect {
     NSMutableArray *itemAttrs = [[NSMutableArray alloc] init];
     NSIndexSet *visibleSections = [self sectionIndexesInRect:rect];
@@ -297,11 +306,10 @@
     return visibleIndexes;
 }
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
-    return YES;
-}
+#pragma mark - Sticky Header implementation methods
 
-- (void)updateHeaderAttributes:(UICollectionViewLayoutAttributes *)attributes lastCellAttributes:(UICollectionViewLayoutAttributes *)lastCellAttributes
+- (void)updateHeaderAttributes:(UICollectionViewLayoutAttributes *)attributes
+            lastCellAttributes:(UICollectionViewLayoutAttributes *)lastCellAttributes
 {
     CGRect currentBounds = self.collectionView.bounds;
     attributes.zIndex = 1024;

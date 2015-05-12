@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#ifdef DEBUG
-#define DDLog(...) NSLog(__VA_ARGS__)
-//#define DDLog(...)
-#else
-#define DDLog(...)
-#endif
-
 @class  DDCollectionViewFlowLayout;
 
 @protocol DDCollectionViewDelegateFlowLayout <UICollectionViewDelegateFlowLayout>
