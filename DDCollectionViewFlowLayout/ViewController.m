@@ -9,11 +9,14 @@
 #import "ViewController.h"
 #import "DDCollectionViewFlowLayout.h"
 #import "MJRefresh.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface ViewController ()<DDCollectionViewDelegateFlowLayout,UICollectionViewDataSource>{
     NSMutableArray *dataList;
     NSMutableArray *sectionOne;
 }
+
+@property (nonatomic, strong) ALAssetsLibrary *assetLibrary;
 
 @end
 
@@ -35,15 +38,17 @@
     layout.enableStickyHeaders = YES;
     [self.collectionView setCollectionViewLayout:layout];
     
-    [self setData];
+//    [self setData];
     
-    __weak typeof(self) weakOfSelf = self;
-    [self.collectionView addLegendFooterWithRefreshingBlock:^{
-        [weakOfSelf addMore];
-    }];
-    [self.collectionView addLegendHeaderWithRefreshingBlock:^{
-        [weakOfSelf setData];
-    }];
+//    __weak typeof(self) weakOfSelf = self;
+//    [self.collectionView addLegendFooterWithRefreshingBlock:^{
+//        [weakOfSelf addMore];
+//    }];
+//    [self.collectionView addLegendHeaderWithRefreshingBlock:^{
+//        [weakOfSelf setData];
+//    }];
+    
+    [self loadAssets];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,7 +59,7 @@
 #pragma mark - UICollectionView DataSource Methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 4;
+    return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -72,10 +77,13 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section == [self numberOfSectionsInCollectionView:collectionView] - 1){
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
+        UIImageView *imageV = (UIImageView *)[cell.contentView viewWithTag:3];
+        ALAsset *set = dataList[indexPath.row];
+        [imageV setImage:[UIImage imageWithCGImage:set.thumbnail]];
         UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
         lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
         NSLog(@"lblTitle = %@",lblTitle.text);
-        cell.backgroundColor = dataList[indexPath.row][@"color"];
+//        cell.backgroundColor = dataList[indexPath.row][@"color"];
         return cell;
     }else{
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
@@ -118,8 +126,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == [self numberOfSectionsInCollectionView:collectionView] - 1)
-        return [dataList[indexPath.row][@"size"] CGSizeValue];
+//    if(indexPath.section == [self numberOfSectionsInCollectionView:collectionView] - 1)
+//        return [dataList[indexPath.row][@"size"] CGSizeValue];
     return CGSizeMake(150, 150);
 }
 
@@ -168,11 +176,67 @@
         [dataList addObject:dict];
         [indexPaths addObject:[NSIndexPath indexPathForItem:item + i inSection:[self numberOfSectionsInCollectionView:self.collectionView] - 1]];
     }
-//    NSLog(@"indexPaths = %@",indexPaths);
-    [self.collectionView insertItemsAtIndexPaths:indexPaths];
-//    [self.collectionView reloadData];
     
     [self.collectionView.legendFooter endRefreshing];
 }
+
+
+- (void)loadAssets {
+    
+    // Initialise
+    dataList = [NSMutableArray new];
+    _assetLibrary = [[ALAssetsLibrary alloc] init];
+    
+    // Run in the background as it takes a while to get all assets from the library
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSMutableArray *assetGroups = [[NSMutableArray alloc] init];
+        NSMutableArray *assetURLDictionaries = [[NSMutableArray alloc] init];
+        
+        // Process assets
+        void (^assetEnumerator)(ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+            if (result != nil) {
+                if ([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto]) {
+                    [assetURLDictionaries addObject:[result valueForProperty:ALAssetPropertyURLs]];
+                    NSURL *url = result.defaultRepresentation.url;
+                    [_assetLibrary assetForURL:url
+                                   resultBlock:^(ALAsset *asset) {
+                                       if (asset) {
+                                           @synchronized(dataList) {
+                                               [dataList addObject:asset];
+                                           }
+                                       }
+                                   }
+                                  failureBlock:^(NSError *error){
+                                      NSLog(@"operation was not successfull!");
+                                  }];
+                    
+                }
+            }
+        };
+        
+        // Process groups
+        void (^ assetGroupEnumerator) (ALAssetsGroup *, BOOL *) = ^(ALAssetsGroup *group, BOOL *stop) {
+            if (group != nil) {
+                [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:assetEnumerator];
+                [assetGroups addObject:group];
+            }
+            if (dataList.count > 0) {
+                // Added first asset so reload data
+                [self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+            }
+        };
+        
+        // Process!
+        [self.assetLibrary enumerateGroupsWithTypes:ALAssetsGroupAll
+                                         usingBlock:assetGroupEnumerator
+                                       failureBlock:^(NSError *error) {
+                                           NSLog(@"There is an error");
+                                       }];
+        
+    });
+    
+}
+
 
 @end
