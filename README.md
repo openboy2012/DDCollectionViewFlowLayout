@@ -1,10 +1,11 @@
 # DDCollectionViewFlowLayout
 a CollectionViewFlowLayout implement the Waterfall Effect, it's also supported mutiple sections.  
 you can custom the header & footer, you also can custom the UICollectionViewCell.   
+now, you can set header sticky on the top when you scroll the collectionView in version 0.5. 
 
 ##Effects
-<img src="http://ipa-download.qiniudn.com/loadingmore.gif" width="276"/>
-<img src="http://ipa-download.qiniudn.com/waterfall.gif" width="276"/>
+<img src="http://ipa-download.qiniudn.com/effect1.gif" width="276"/>
+<img src="http://ipa-download.qiniudn.com/effect2.gif" width="276"/>
 
 ##Installation
 
@@ -19,14 +20,11 @@ Alternatively, you can just drag the files from `DDCollectionViewFlowLayout / Cl
 
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
 
-import `DDCollectionViewFlowLayout.h` in your project    
-
-import `@interface ViewController ()<DDCollectionViewDelegateFlowLayout,UICollectionViewDataSource>` protocol
-
-for example:
+**1.example like wechat photo wall effect** 
 ```
     DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
     layout.delegate = self;
+    layout.enableStickyHeaders = YES; //set the header sticky if you want
     [self.collectionView setCollectionViewLayout:layout];
     
 ```
@@ -36,6 +34,71 @@ implemention the `DDCollectionViewDelegateFlowLayout & UICollectionViewDataSourc
 `DDCollectionViewDelegateFlowLayout` inherit `UICollectionViewDelegateFlowLayout` Protocol.
 
 code:
+```
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return [[dataDict allKeys] count];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    sortedArray = [[dataDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    return [dataDict[sortedArray[section]] count];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)layout numberOfColumnsInSection:(NSInteger)section{
+    return 4;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    PhotoCell *cell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
+    NSURL *url = dataDict[sortedArray[indexPath.section]][indexPath.row];
+    [_assetLibrary assetForURL:url
+                   resultBlock:^(ALAsset *asset) {
+                       [cell.photo setImage:[UIImage imageWithCGImage:asset.thumbnail]];
+                   }
+                  failureBlock:^(NSError *error) {
+                  }];
+    return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+    if(kind == UICollectionElementKindSectionHeader){
+        UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
+//        header.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5f];
+        UILabel *lblTitle = (UILabel *)[header viewWithTag:2];
+        lblTitle.text = sortedArray[indexPath.section];
+        return header;
+    }
+    return nil;
+}
+
+#pragma mark - UICollectionView Delegate Methods
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    return 1;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    return 1;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(1, 1, 1, 1);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(80, 80);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    return CGSizeMake(self.view.bounds.size.width, 30);
+}
+
+```
+
+**2.effect like waterfall**
+
+example code:
 ```
 #pragma mark - UICollectionView DataSource Methods
 
@@ -48,60 +111,34 @@ code:
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)layout numberOfColumnsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
-    UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
-    lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
-    cell.backgroundColor = dataList[indexPath.row][@"color"];
+    WaterfallCell *cell = (WaterfallCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
+    ALAsset *set = dataList[indexPath.item];
+    [cell.photo setImage:[UIImage imageWithCGImage:set.thumbnail]];
     return cell;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
-    if(!hasMore){
-        [loadingMoreIndicator stopAnimating];
-        [loadingMoreIndicator removeFromSuperview];
-        loadingMoreIndicator = nil;
-        return footer;
-    }
-    if(!loadingMoreIndicator)
-        loadingMoreIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0.0, 0.0, 20.0, 20.0f)];
-    loadingMoreIndicator.center = CGPointMake(footer.center.x, 15.0f);
-    loadingMoreIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [footer addSubview:loadingMoreIndicator];
-    [loadingMoreIndicator startAnimating];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if(!isLoadingMore && hasMore){
-            [self addSize:YES];
-        }
-    });
-    return footer;
 }
 
 #pragma mark - UICollectionView Delegate Methods
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 8.0f;
+    return 5;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 8.0f;
+    return 5;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(6.0f, 6.0, 0.0, 6.0f);
+    return UIEdgeInsetsMake(5, 5, 5, 5);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return [dataList[indexPath.row][@"size"] CGSizeValue];
+    return CGSizeMake(100, 100 + indexPath.item % 20);
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-    return CGSizeMake(self.view.bounds.size.width, 44.0f);
-}
 ```
 
 ## Protocol Methods
