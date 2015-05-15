@@ -24,6 +24,7 @@
 
 @interface PhotoViewController ()<DDCollectionViewDelegateFlowLayout,UICollectionViewDataSource>{
     NSMutableDictionary *dataDict;
+    NSArray *sortedArray;
 }
 
 @property (nonatomic, strong) ALAssetsLibrary *assetLibrary;
@@ -58,7 +59,8 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [dataDict[[dataDict allKeys][section]] count];
+    sortedArray = [[dataDict allKeys] sortedArrayUsingSelector:@selector(compare:)];
+    return [dataDict[sortedArray[section]] count];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)layout numberOfColumnsInSection:(NSInteger)section{
@@ -67,7 +69,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoCell *cell = (PhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
-    NSURL *url = dataDict[[dataDict allKeys][indexPath.section]][indexPath.row];
+    NSURL *url = dataDict[sortedArray[indexPath.section]][indexPath.row];
     [_assetLibrary assetForURL:url
                    resultBlock:^(ALAsset *asset) {
                        [cell.photo setImage:[UIImage imageWithCGImage:asset.thumbnail]];
@@ -82,7 +84,7 @@
         UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
 //        header.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5f];
         UILabel *lblTitle = (UILabel *)[header viewWithTag:2];
-        lblTitle.text = [dataDict allKeys][indexPath.section];
+        lblTitle.text = sortedArray[indexPath.section];
         return header;
     }
     return nil;

@@ -38,14 +38,9 @@
     if(!dataList)
         dataList = [[NSMutableArray alloc] initWithCapacity:0];
     [dataList removeAllObjects];
-    
-    if(!sectionOne)
-        sectionOne = [[NSMutableArray alloc] initWithCapacity:0];
-    [sectionOne removeAllObjects];
 
     DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
     layout.delegate = self;
-    layout.enableStickyHeaders = YES;
     [self.collectionView setCollectionViewLayout:layout];
     
     [self loadAssets];
@@ -63,10 +58,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if(section == [self numberOfSectionsInCollectionView:collectionView] - 1){
-        return dataList.count;
-    }
-    return sectionOne.count;
+    return dataList.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)layout numberOfColumnsInSection:(NSInteger)section{
@@ -74,35 +66,10 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.section == [self numberOfSectionsInCollectionView:collectionView] - 1){
-        WaterfallCell *cell = (WaterfallCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
-        ALAsset *set = dataList[indexPath.item];
-        [cell.photo setImage:[UIImage imageWithCGImage:set.thumbnail]];
-        return cell;
-    }else{
-        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseCell" forIndexPath:indexPath];
-        UILabel *lblTitle = (UILabel *)[cell.contentView viewWithTag:2];
-        lblTitle.text = [NSString stringWithFormat:@"{%ld,%ld}",indexPath.section,indexPath.item];
-        cell.backgroundColor = [UIColor yellowColor];
-        return cell;
-    }
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    if(kind == UICollectionElementKindSectionHeader){
-        UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
-        header.backgroundColor = [UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:0.5f];
-        UILabel *lblTitle = (UILabel *)[header viewWithTag:2];
-        lblTitle.text = [NSString stringWithFormat:@"Header %d",(int)indexPath.section + 1];
-        return header;
-    }else if(kind == UICollectionElementKindSectionFooter){
-        UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
-        footer.backgroundColor = [UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0f];
-        UILabel *lblTitle = (UILabel *)[footer viewWithTag:2];
-        lblTitle.text = [NSString stringWithFormat:@"Footer %d",(int)indexPath.section + 1];
-        return footer;
-    }
-    return nil;
+    WaterfallCell *cell = (WaterfallCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
+    ALAsset *set = dataList[indexPath.item];
+    [cell.photo setImage:[UIImage imageWithCGImage:set.thumbnail]];
+    return cell;
 }
 
 #pragma mark - UICollectionView Delegate Methods
@@ -120,17 +87,8 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-//    ALAsset *set = dataList[indexPath.item];
     return CGSizeMake(100, 100 + indexPath.item % 20);
 }
-
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-//    return CGSizeMake(self.view.bounds.size.width, 44);
-//}
-//
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-//    return CGSizeMake(self.view.bounds.size.width, 44);
-//}
 
 - (void)loadAssets {
     
