@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  WaterfallViewController.h
 //  DDCollectionViewFlowLayout
 //
 //  Created by Diaoshu on 15-2-12.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UICollectionViewController
+@interface WaterfallViewController : UICollectionViewController
 
 
 @end

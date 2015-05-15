@@ -23,12 +23,14 @@
 		8E0F63B31AA1836400B75A4F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8E0F63B01AA1836400B75A4F /* LICENSE */; };
 		8E6565191A8C40610028E793 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6565181A8C40610028E793 /* main.m */; };
 		8E65651C1A8C40610028E793 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65651B1A8C40610028E793 /* AppDelegate.m */; };
-		8E65651F1A8C40610028E793 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65651E1A8C40610028E793 /* ViewController.m */; };
+		8E65651F1A8C40610028E793 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65651E1A8C40610028E793 /* PhotoViewController.m */; };
 		8E6565221A8C40610028E793 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6565201A8C40610028E793 /* Main.storyboard */; };
 		8E6565241A8C40610028E793 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6565231A8C40610028E793 /* Images.xcassets */; };
 		8E6565271A8C40610028E793 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E6565251A8C40610028E793 /* LaunchScreen.xib */; };
 		8E6565331A8C40610028E793 /* DDCollectionViewFlowLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6565321A8C40610028E793 /* DDCollectionViewFlowLayoutTests.m */; };
 		8E65653F1A8C41410028E793 /* DDCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65653E1A8C41410028E793 /* DDCollectionViewFlowLayout.m */; };
+		CA85E4D81B055DB000B43ADA /* WaterfallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA85E4D71B055DB000B43ADA /* WaterfallViewController.m */; };
+		CAAA4BD31B05B89800521517 /* NSDate+DDKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CAAA4BD21B05B89800521517 /* NSDate+DDKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,8 +75,8 @@
 		8E6565181A8C40610028E793 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E65651A1A8C40610028E793 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8E65651B1A8C40610028E793 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8E65651D1A8C40610028E793 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8E65651E1A8C40610028E793 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		8E65651D1A8C40610028E793 /* PhotoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		8E65651E1A8C40610028E793 /* PhotoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		8E6565211A8C40610028E793 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E6565231A8C40610028E793 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8E6565261A8C40610028E793 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -83,6 +85,10 @@
 		8E6565321A8C40610028E793 /* DDCollectionViewFlowLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDCollectionViewFlowLayoutTests.m; sourceTree = "<group>"; };
 		8E65653D1A8C41410028E793 /* DDCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		8E65653E1A8C41410028E793 /* DDCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		CA85E4D61B055DB000B43ADA /* WaterfallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaterfallViewController.h; sourceTree = "<group>"; };
+		CA85E4D71B055DB000B43ADA /* WaterfallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaterfallViewController.m; sourceTree = "<group>"; };
+		CAAA4BD11B05B89800521517 /* NSDate+DDKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DDKit.h"; sourceTree = "<group>"; };
+		CAAA4BD21B05B89800521517 /* NSDate+DDKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DDKit.m"; sourceTree = "<group>"; };
 		F34FB4688796BD47CBE10B51 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -171,8 +177,12 @@
 				8E65653C1A8C41020028E793 /* Classes */,
 				8E65651A1A8C40610028E793 /* AppDelegate.h */,
 				8E65651B1A8C40610028E793 /* AppDelegate.m */,
-				8E65651D1A8C40610028E793 /* ViewController.h */,
-				8E65651E1A8C40610028E793 /* ViewController.m */,
+				CAAA4BD11B05B89800521517 /* NSDate+DDKit.h */,
+				CAAA4BD21B05B89800521517 /* NSDate+DDKit.m */,
+				CA85E4D61B055DB000B43ADA /* WaterfallViewController.h */,
+				CA85E4D71B055DB000B43ADA /* WaterfallViewController.m */,
+				8E65651D1A8C40610028E793 /* PhotoViewController.h */,
+				8E65651E1A8C40610028E793 /* PhotoViewController.m */,
 				8E6565201A8C40610028E793 /* Main.storyboard */,
 				8E6565231A8C40610028E793 /* Images.xcassets */,
 				8E6565251A8C40610028E793 /* LaunchScreen.xib */,
@@ -323,7 +333,9 @@
 				2FEC6BFB1B0227D20012CD74 /* UIView+MJExtension.m in Sources */,
 				2FEC6BF91B0227D20012CD74 /* UIScrollView+MJExtension.m in Sources */,
 				8E65653F1A8C41410028E793 /* DDCollectionViewFlowLayout.m in Sources */,
-				8E65651F1A8C40610028E793 /* ViewController.m in Sources */,
+				CAAA4BD31B05B89800521517 /* NSDate+DDKit.m in Sources */,
+				8E65651F1A8C40610028E793 /* PhotoViewController.m in Sources */,
+				CA85E4D81B055DB000B43ADA /* WaterfallViewController.m in Sources */,
 				2FEC6BFA1B0227D20012CD74 /* UIScrollView+MJRefresh.m in Sources */,
 				2FEC6BF41B0227D20012CD74 /* MJRefreshGifFooter.m in Sources */,
 				2FEC6BF81B0227D20012CD74 /* MJRefreshLegendHeader.m in Sources */,
