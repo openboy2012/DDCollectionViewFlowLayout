@@ -20,7 +20,7 @@ Alternatively, you can just drag the files from `DDCollectionViewFlowLayout / Cl
 
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
 
-**1.example like wechat photo wall effect** 
+**1.example like Wechat photo wall effect** 
 ```
     DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
     layout.delegate = self;
@@ -146,6 +146,11 @@ example code:
 `- (NSInteger)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)layout numberOfColumnsInSection:(NSInteger)section;` 
 
 `DDCollectionViewDelegateFlowLayout` inherit `UICollectionViewDelegateFlowLayout` Protocol. so you can use all the `UICollectionViewDelegateFlowLayout` protocal methods in `DDCollectionViewDelegateFlowLayout`
+
+## Updates
+
+* 0.5 add the header sticky feature
+* 0.4 code optimzation about the UI
 
 ## Requirements
 
