@@ -21,7 +21,7 @@ Alternatively, you can just drag the files from `DDCollectionViewFlowLayout / Cl
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
 
 **1.example like Wechat photo wall effect** 
-```
+```objective-c
     DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
     layout.delegate = self;
     layout.enableStickyHeaders = YES; //set the header sticky if you want
@@ -34,7 +34,7 @@ implemention the `DDCollectionViewDelegateFlowLayout & UICollectionViewDataSourc
 `DDCollectionViewDelegateFlowLayout` inherit `UICollectionViewDelegateFlowLayout` Protocol.
 
 code:
-```
+```objective-c
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return [[dataDict allKeys] count];
@@ -99,7 +99,7 @@ code:
 **2.effect like waterfall**
 
 example code:
-```
+```objective-c
 #pragma mark - UICollectionView DataSource Methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
