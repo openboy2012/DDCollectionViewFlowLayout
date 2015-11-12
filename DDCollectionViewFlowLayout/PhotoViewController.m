@@ -2,7 +2,7 @@
 //  ViewController.m
 //  DDCollectionViewFlowLayout
 //
-//  Created by Diaoshu on 15-2-12.
+//  Created by DeJohn Dong on 15-2-12.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
@@ -82,10 +82,15 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if(kind == UICollectionElementKindSectionHeader){
         UICollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
-//        header.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5f];
         UILabel *lblTitle = (UILabel *)[header viewWithTag:2];
         lblTitle.text = sortedArray[indexPath.section];
         return header;
+    }
+    else if(kind == UICollectionElementKindSectionFooter)
+    {
+        UICollectionReusableView *footer = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"footer" forIndexPath:indexPath];
+        footer.backgroundColor = [UIColor colorWithRed:indexPath.section * 10/255.0 green:indexPath.section * 5/255.0 blue:indexPath.section * 8/255.0 alpha:1.0f];
+        return footer;
     }
     return nil;
 }
@@ -110,6 +115,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(self.view.bounds.size.width, 30);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake(self.view.bounds.size.width, 40);
 }
 
 #pragma mark - dataSource methods

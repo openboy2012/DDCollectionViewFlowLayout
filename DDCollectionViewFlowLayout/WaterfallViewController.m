@@ -2,7 +2,7 @@
 //  aterfallViewController.m
 //  DDCollectionViewFlowLayout
 //
-//  Created by Diaoshu on 15-2-12.
+//  Created by DeJohn Dong on 15-2-12.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
@@ -54,7 +54,7 @@
 #pragma mark - UICollectionView DataSource Methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

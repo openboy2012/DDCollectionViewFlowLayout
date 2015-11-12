@@ -2,13 +2,13 @@
 //  DDCollectionViewFlowLayout.m
 //  DDCollectionViewFlowLayout
 //
-//  Created by Diaoshu on 15-2-12.
+//  Created by DeJohn Dong on 15-2-12.
 //  Copyright (c) 2015年 DDKit. All rights reserved.
 //
 
 #import "DDCollectionViewFlowLayout.h"
 
-@interface DDCollectionViewFlowLayout(){
+@interface DDCollectionViewFlowLayout() {
     NSMutableArray			*sectionRects;
     NSMutableArray			*columnRectsInSection;
     
@@ -34,7 +34,7 @@
     return lastSize;
 }
 
-- (void)prepareLayout{
+- (void)prepareLayout {
     
     NSUInteger numberOfSections = self.collectionView.numberOfSections;
     sectionRects = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
@@ -63,13 +63,13 @@
     return [self searchVisibleLayoutAttributesInRect:rect];
 }
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
     return YES;
 }
 
 #pragma mark - Private Methods
 
-- (void)prepareSectionLayout:(NSUInteger)section withNumberOfItems:(NSUInteger)numberOfItems{
+- (void)prepareSectionLayout:(NSUInteger)section withNumberOfItems:(NSUInteger)numberOfItems {
     UICollectionView *cView = self.collectionView;
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
@@ -83,7 +83,7 @@
     sectionRect.origin.y = CGRectGetHeight(previousSectionRect) + CGRectGetMinY(previousSectionRect);
     sectionRect.size.width = cView.bounds.size.width;
     
-    if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]){
+    if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
         
         //# Define the rect of the header
         CGRect headerFrame;
@@ -107,7 +107,7 @@
     //# get the insets of section
     UIEdgeInsets sectionInset = UIEdgeInsetsZero;
     
-    if([self.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]){
+    if([self.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
         sectionInset = [self.delegate collectionView:cView layout:self insetForSectionAtIndex:section];
     }
     
