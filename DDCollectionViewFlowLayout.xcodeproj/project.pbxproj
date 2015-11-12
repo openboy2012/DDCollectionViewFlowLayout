@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DAF199E1BF4481E007359C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF199D1BF4481E007359C1 /* Images.xcassets */; };
+		0DAF19E01BF44BF3007359C1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF19DE1BF44BF3007359C1 /* Launch Screen.storyboard */; };
 		2FEC6BF01B0227D20012CD74 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC6BD81B0227D20012CD74 /* MJRefresh.bundle */; };
 		2FEC6BF11B0227D20012CD74 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC6BDB1B0227D20012CD74 /* MJRefreshComponent.m */; };
 		2FEC6BF21B0227D20012CD74 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC6BDD1B0227D20012CD74 /* MJRefreshConst.m */; };
@@ -20,13 +22,10 @@
 		2FEC6BFA1B0227D20012CD74 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC6BED1B0227D20012CD74 /* UIScrollView+MJRefresh.m */; };
 		2FEC6BFB1B0227D20012CD74 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC6BEF1B0227D20012CD74 /* UIView+MJExtension.m */; };
 		8E0F63B21AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8E0F63AF1AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec */; };
-		8E0F63B31AA1836400B75A4F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8E0F63B01AA1836400B75A4F /* LICENSE */; };
 		8E6565191A8C40610028E793 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6565181A8C40610028E793 /* main.m */; };
 		8E65651C1A8C40610028E793 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65651B1A8C40610028E793 /* AppDelegate.m */; };
 		8E65651F1A8C40610028E793 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65651E1A8C40610028E793 /* PhotoViewController.m */; };
 		8E6565221A8C40610028E793 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E6565201A8C40610028E793 /* Main.storyboard */; };
-		8E6565241A8C40610028E793 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E6565231A8C40610028E793 /* Images.xcassets */; };
-		8E6565271A8C40610028E793 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E6565251A8C40610028E793 /* LaunchScreen.xib */; };
 		8E6565331A8C40610028E793 /* DDCollectionViewFlowLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E6565321A8C40610028E793 /* DDCollectionViewFlowLayoutTests.m */; };
 		8E65653F1A8C41410028E793 /* DDCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E65653E1A8C41410028E793 /* DDCollectionViewFlowLayout.m */; };
 		CA85E4D81B055DB000B43ADA /* WaterfallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA85E4D71B055DB000B43ADA /* WaterfallViewController.m */; };
@@ -44,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DAF199D1BF4481E007359C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0DAF19DF1BF44BF3007359C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		2FEC6BD81B0227D20012CD74 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		2FEC6BD91B0227D20012CD74 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
 		2FEC6BDA1B0227D20012CD74 /* MJRefreshComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshComponent.h; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		2FEC6BEE1B0227D20012CD74 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		2FEC6BEF1B0227D20012CD74 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		8E0F63AF1AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DDCollectionViewFlowLayout.podspec; sourceTree = "<group>"; };
-		8E0F63B01AA1836400B75A4F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		8E6565131A8C40610028E793 /* DDCollectionViewFlowLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDCollectionViewFlowLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6565171A8C40610028E793 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E6565181A8C40610028E793 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -78,8 +78,6 @@
 		8E65651D1A8C40610028E793 /* PhotoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
 		8E65651E1A8C40610028E793 /* PhotoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		8E6565211A8C40610028E793 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8E6565231A8C40610028E793 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8E6565261A8C40610028E793 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8E65652C1A8C40610028E793 /* DDCollectionViewFlowLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDCollectionViewFlowLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6565311A8C40610028E793 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E6565321A8C40610028E793 /* DDCollectionViewFlowLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDCollectionViewFlowLayoutTests.m; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				8E0F63AF1AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec */,
-				8E0F63B01AA1836400B75A4F /* LICENSE */,
 				8E6565151A8C40610028E793 /* DDCollectionViewFlowLayout */,
 				8E65652F1A8C40610028E793 /* DDCollectionViewFlowLayoutTests */,
 				8E6565141A8C40610028E793 /* Products */,
@@ -184,9 +181,9 @@
 				8E65651D1A8C40610028E793 /* PhotoViewController.h */,
 				8E65651E1A8C40610028E793 /* PhotoViewController.m */,
 				8E6565201A8C40610028E793 /* Main.storyboard */,
-				8E6565231A8C40610028E793 /* Images.xcassets */,
-				8E6565251A8C40610028E793 /* LaunchScreen.xib */,
+				0DAF19DE1BF44BF3007359C1 /* Launch Screen.storyboard */,
 				8E6565161A8C40610028E793 /* Supporting Files */,
+				0DAF199D1BF4481E007359C1 /* Images.xcassets */,
 			);
 			path = DDCollectionViewFlowLayout;
 			sourceTree = "<group>";
@@ -270,7 +267,7 @@
 		8E65650B1A8C40610028E793 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = DDKit;
 				TargetAttributes = {
 					8E6565121A8C40610028E793 = {
@@ -306,12 +303,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DAF19E01BF44BF3007359C1 /* Launch Screen.storyboard in Resources */,
 				8E6565221A8C40610028E793 /* Main.storyboard in Resources */,
-				8E6565271A8C40610028E793 /* LaunchScreen.xib in Resources */,
 				2FEC6BF01B0227D20012CD74 /* MJRefresh.bundle in Resources */,
-				8E6565241A8C40610028E793 /* Images.xcassets in Resources */,
+				0DAF199E1BF4481E007359C1 /* Images.xcassets in Resources */,
 				8E0F63B21AA1836400B75A4F /* DDCollectionViewFlowLayout.podspec in Resources */,
-				8E0F63B31AA1836400B75A4F /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,20 +364,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0DAF19DE1BF44BF3007359C1 /* Launch Screen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DAF19DF1BF44BF3007359C1 /* Base */,
+			);
+			name = "Launch Screen.storyboard";
+			sourceTree = "<group>";
+		};
 		8E6565201A8C40610028E793 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				8E6565211A8C40610028E793 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		8E6565251A8C40610028E793 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8E6565261A8C40610028E793 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -407,6 +403,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -421,7 +418,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -456,7 +453,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -470,6 +467,7 @@
 				INFOPLIST_FILE = DDCollectionViewFlowLayout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ddkit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -481,6 +479,7 @@
 				INFOPLIST_FILE = DDCollectionViewFlowLayout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ddkit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -489,16 +488,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = DDCollectionViewFlowLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ddkit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DDCollectionViewFlowLayout.app/DDCollectionViewFlowLayout";
 			};
@@ -508,12 +505,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = DDCollectionViewFlowLayoutTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ddkit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DDCollectionViewFlowLayout.app/DDCollectionViewFlowLayout";
 			};
