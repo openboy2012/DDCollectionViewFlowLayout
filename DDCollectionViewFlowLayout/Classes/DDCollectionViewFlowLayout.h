@@ -14,7 +14,7 @@
 
 @required
 /**
- *  number of column in section protocol delegate methods
+ *  The number of column in section protocol delegate methods
  *
  *  @param collectionView collectionView
  *  @param layout         DDCollectionViewFlowLayout
