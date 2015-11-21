@@ -9,7 +9,8 @@ now, you can set header sticky on the top when you scroll the collectionView in 
 
 ##Installation
 
-[![Version](http://cocoapod-badges.herokuapp.com/v/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/) [![Platform](http://cocoapod-badges.herokuapp.com/p/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)   
+[![Build Status](https://travis-ci.org/openboy2012/DDCollectionViewFlowLayout.svg?branch=master)](https://travis-ci.org/openboy2012/DDCollectionViewFlowLayout)&nbsp;
+[![Version](http://cocoapod-badges.herokuapp.com/v/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)&nbsp;[![Platform](http://cocoapod-badges.herokuapp.com/p/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)   
 DDCollectionViewFlowLayout is available through [CocoaPods](http://cocoapods.org), to install
 it simply add the following line to your Podfile:
 
