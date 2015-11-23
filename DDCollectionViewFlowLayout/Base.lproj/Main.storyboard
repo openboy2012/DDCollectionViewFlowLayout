@@ -137,7 +137,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vTT-x1-iEm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-274" y="-29"/>
+            <point key="canvasLocation" x="-414" y="-28"/>
         </scene>
         <!--瀑布流-->
         <scene sceneID="wqH-44-YGp">
