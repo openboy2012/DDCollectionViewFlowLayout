@@ -19,4 +19,6 @@
  */
 - (BOOL)isSameToDate:(NSDate *)date;
 
+- (BOOL)isSameToMonth:(NSDate *)date;
+
 @end

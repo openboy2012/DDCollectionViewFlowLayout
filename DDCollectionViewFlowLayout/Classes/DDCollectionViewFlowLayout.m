@@ -10,11 +10,29 @@
 
 @interface DDCollectionViewFlowLayout()
 
+/**
+ *  The section rects array, to store the collectionView sections's rect.
+ */
 @property (nonatomic, strong) NSMutableArray *sectionRects;
+/**
+ *  The column rects in section array, to store the ervery rect of column in collectionView section.
+ */
 @property (nonatomic, strong) NSMutableArray *columnRectsInSection;
+/**
+ *  The layoutItemAttributes array, to store all the layoutItemAttributes of UICollectionViewCell in the collectionView.
+ */
 @property (nonatomic, strong) NSMutableArray *layoutItemAttributes;
+/**
+ *  The collectionView's header & footer dictionary, to store all the UICollectionElementKindSectionHeader & UICollectionElementKindSectionFooter attributes. There are two arrays in the dictionary.
+ */
 @property (nonatomic, strong) NSDictionary *headerFooterItemAttributes;
+/**
+ *  The section insetses array, to store the section insetses ervery collection section.
+ */
 @property (nonatomic, strong) NSMutableArray *sectionInsetses;
+/**
+ *  The edge insets variable.
+ */
 @property (nonatomic) UIEdgeInsets currentEdgeInsets;
 
 @end
@@ -24,6 +42,7 @@
 #pragma mark - UISubclassingHooks Category Methods
 
 - (CGSize)collectionViewContentSize {
+    // update contentSize in super layout.
     [super collectionViewContentSize];
     
     CGRect lastSectionRect = [[self.sectionRects lastObject] CGRectValue];
@@ -43,7 +62,7 @@
     for (NSUInteger section = 0; section < numberOfSections; ++section) {
         NSUInteger itemsInSection = [self.collectionView numberOfItemsInSection:section];
         [self.layoutItemAttributes addObject:[NSMutableArray array]];
-        [self prepareSectionLayout:section withNumberOfItems:itemsInSection];
+        [self prepareLayoutInSection:section numberOfItems:itemsInSection];
     }
 }
 
@@ -61,28 +80,37 @@
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
-    return YES;
+    return self.enableStickyHeaders;
 }
 
 #pragma mark - Private Methods
 
-- (void)prepareSectionLayout:(NSUInteger)section withNumberOfItems:(NSUInteger)numberOfItems {
-    UICollectionView *cView = self.collectionView;
+- (void)prepareLayoutInSection:(NSUInteger)section numberOfItems:(NSUInteger)items {
+    UICollectionView *collectionView = self.collectionView;
     
+    /**
+     *  Initialize the indexPath of the section.
+     */
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     
-    //# hanlde the section header
-    CGFloat headerHeight = 0.0f;
-    
+    /**
+     *  Get the rectangles of last section.
+     */
     CGRect previousSectionRect = [self rectForSectionAtIndex:indexPath.section - 1];
     CGRect sectionRect;
     sectionRect.origin.x = 0;
     sectionRect.origin.y = CGRectGetHeight(previousSectionRect) + CGRectGetMinY(previousSectionRect);
-    sectionRect.size.width = cView.bounds.size.width;
+    sectionRect.size.width = collectionView.bounds.size.width;
     
+    /**
+     *  Begin add the header layout attributes in the section.
+     */
+    CGFloat headerHeight = 0.0f;
+    
+    // Check the flow layout if implementation the `collectionView:layout:referenceSizeForHeaderInSection:` protocol method. If not implementation pass the header initilaztion.
     if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
         
-        //# Define the rect of the header
+        // Initialize the header rectangles.
         CGRect headerFrame;
         headerFrame.origin.x = 0.0f;
         headerFrame.origin.y = sectionRect.origin.y;
@@ -101,61 +129,73 @@
         [self.headerFooterItemAttributes[UICollectionElementKindSectionHeader] addObject:headerAttributes];
     }
 
-    //# get the insets of section
-    UIEdgeInsets sectionInset = UIEdgeInsetsZero;
+    /**
+     *  Begin add the body items layout attributes in the section.
+     */
+    UIEdgeInsets sectionInsets = UIEdgeInsetsZero;
     
+    // Check the flow layout if implementation the `collectionView:layout:insetForSectionAtIndex:` protocol method. If not implementation use the default insets is zero.
     if([self.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
-        sectionInset = [self.delegate collectionView:cView layout:self insetForSectionAtIndex:section];
+        sectionInsets = [self.delegate collectionView:collectionView layout:self insetForSectionAtIndex:section];
     }
     
-    [self.sectionInsetses addObject:[NSValue valueWithUIEdgeInsets:sectionInset]];
+    [self.sectionInsetses addObject:[NSValue valueWithUIEdgeInsets:sectionInsets]];
     
-    CGRect itemsContentRect;
-    
-    //# the the lineSpacing & interitemSpacing default values
+    /**
+     *  Set the lineSpacing & interitemSpacing between the cells, default values is 0.0f.
+     */
     CGFloat lineSpacing = 0.0f;
     CGFloat interitemSpacing = 0.0f;
 
+    // Check the flow layout if implementation the `collectionView:layout:minimumInteritemSpacingForSectionAtIndex:` & `collectionView:layout:minimumLineSpacingForSectionAtIndex:` protocol methods. If implementation set the lineSpacing & interitemSpacing value from the protocol methods.
     if([self.delegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)]) {
-        interitemSpacing = [self.delegate collectionView:cView layout:self minimumInteritemSpacingForSectionAtIndex:section];
+        interitemSpacing = [self.delegate collectionView:collectionView layout:self minimumInteritemSpacingForSectionAtIndex:section];
     }
     
     if([self.delegate respondsToSelector:@selector(collectionView:layout:minimumLineSpacingForSectionAtIndex:)]) {
-        lineSpacing = [self.delegate collectionView:cView layout:self minimumLineSpacingForSectionAtIndex:section];
+        lineSpacing = [self.delegate collectionView:collectionView layout:self minimumLineSpacingForSectionAtIndex:section];
     }
     
-    itemsContentRect.origin.x = sectionInset.left;
-    itemsContentRect.origin.y = headerHeight + sectionInset.top;
+    CGRect itemsContentRect;
+    itemsContentRect.origin.x = sectionInsets.left;
+    itemsContentRect.origin.y = headerHeight + sectionInsets.top;
     
-    NSUInteger numberOfColumns = [self.delegate collectionView:cView layout:self numberOfColumnsInSection:section];
-    itemsContentRect.size.width = CGRectGetWidth(cView.frame) - (sectionInset.left + sectionInset.right);
+    NSUInteger numberOfColumns = [self.delegate collectionView:collectionView layout:self numberOfColumnsInSection:section];
+    itemsContentRect.size.width = CGRectGetWidth(collectionView.frame) - (sectionInsets.left + sectionInsets.right);
     
     CGFloat columnSpace = itemsContentRect.size.width - (interitemSpacing * (numberOfColumns - 1));
     CGFloat columnWidth = (columnSpace/numberOfColumns);
     
-    // # store space for each column
+    // Initialize an empty mutable array earch column.
     [self.columnRectsInSection addObject:[NSMutableArray arrayWithCapacity:numberOfColumns]];
     for (NSUInteger colIdx = 0; colIdx < numberOfColumns; ++colIdx)
         [self.columnRectsInSection[section] addObject:[NSMutableArray array]];
     
-    // # Define the rect of the of each item
-    for (NSInteger itemIdx = 0; itemIdx < numberOfItems; ++itemIdx) {
+    // Calculate every cell's rectangles.
+    for (NSInteger itemIdx = 0; itemIdx < items; ++itemIdx) {
         NSIndexPath *itemPath = [NSIndexPath indexPathForItem:itemIdx inSection:section];
-        CGSize itemSize = [self.delegate collectionView:cView layout:self sizeForItemAtIndexPath:itemPath];
-        
         NSInteger destColumnIdx = [self preferredColumnIndexInSection:section];
-        NSInteger destRowInColumn = [self numberOfItemsInColumn:destColumnIdx ofSection:section];
-        CGFloat lastItemInColumnOffset = [self lastItemOffsetInColumn:destColumnIdx inSection:section];
+        NSInteger destRowInColumn = [self numberOfItemsForColumn:destColumnIdx inSection:section];
+        CGFloat lastItemInColumnOffsetY = [self lastItemOffsetYForColumn:destColumnIdx inSection:section];
         
-        if(destRowInColumn == 0) {
-            lastItemInColumnOffset += sectionRect.origin.y;
+        if (destRowInColumn == 0) {
+            lastItemInColumnOffsetY += sectionRect.origin.y;
         }
         
+        /**
+         *  Default item's rectangles is a square.
+         */
         CGRect itemRect;
         itemRect.origin.x = itemsContentRect.origin.x + destColumnIdx * (interitemSpacing + columnWidth);
-        itemRect.origin.y = lastItemInColumnOffset + (destRowInColumn > 0 ? lineSpacing: sectionInset.top);
+        itemRect.origin.y = lastItemInColumnOffsetY + (destRowInColumn > 0 ? lineSpacing: sectionInsets.top);
         itemRect.size.width = columnWidth;
-        itemRect.size.height = itemSize.height;
+        itemRect.size.height = columnWidth;
+        
+        // Check the flow layout if implementation the `collectionView:layout:sizeForItemAtIndexPath:` protocol methods. If implementation set the itemRect size's height is the protocol return size's height.
+        if ([self.delegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)]) {
+            CGSize itemSize = [self.delegate collectionView:collectionView layout:self sizeForItemAtIndexPath:itemPath];
+            itemRect.size.height = itemSize.height;
+        }
                 
         UICollectionViewLayoutAttributes *itemAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:itemPath];
         itemAttributes.frame = itemRect;
@@ -163,11 +203,13 @@
         [self.columnRectsInSection[section][destColumnIdx] addObject:[NSValue valueWithCGRect:itemRect]];
     }
     
-    itemsContentRect.size.height = [self heightOfItemsInSection:indexPath.section] + sectionInset.bottom;
+    itemsContentRect.size.height = [self heightOfItemsInSection:indexPath.section] + sectionInsets.bottom;
     
-    // # define the section footer
+    /**
+     *  Begin add the footer layout attributes in the section.
+     */
     CGFloat footerHeight = 0.0f;
-    if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)]) {
         CGRect footerFrame;
         footerFrame.origin.x = 0;
         footerFrame.origin.y = itemsContentRect.size.height;
@@ -186,7 +228,7 @@
         [self.headerFooterItemAttributes[UICollectionElementKindSectionFooter] addObject:footerAttributes];
     }
     
-    if(section > 0){
+    if (section > 0) {
         itemsContentRect.size.height -= sectionRect.origin.y;
     }
     
@@ -195,21 +237,44 @@
     [self.sectionRects addObject:[NSValue valueWithCGRect:sectionRect]];
 }
 
+/**
+ *  Get the Max height between columns as the height of the section.
+ *
+ *  @param sectionIdx The section index
+ *
+ *  @return The Max height of the section.
+ */
 - (CGFloat)heightOfItemsInSection:(NSUInteger)sectionIdx {
     CGFloat maxHeightBetweenColumns = 0.0f;
     NSArray *columnsInSection = self.columnRectsInSection[sectionIdx];
     for (NSUInteger columnIdx = 0; columnIdx < columnsInSection.count; ++columnIdx) {
-        CGFloat heightOfColumn = [self lastItemOffsetInColumn:columnIdx inSection:sectionIdx];
+        CGFloat heightOfColumn = [self lastItemOffsetYForColumn:columnIdx inSection:sectionIdx];
         maxHeightBetweenColumns = MAX(maxHeightBetweenColumns, heightOfColumn);
     }
     return maxHeightBetweenColumns;
 }
 
-- (NSInteger)numberOfItemsInColumn:(NSInteger)columnIdx ofSection:(NSInteger)sectionIdx {
+/**
+ *  Get the number of items for column in section.
+ *
+ *  @param columnIdx  The column index.
+ *  @param sectionIdx The section index.
+ *
+ *  @return The number of items.
+ */
+- (NSInteger)numberOfItemsForColumn:(NSInteger)columnIdx inSection:(NSInteger)sectionIdx {
     return [self.columnRectsInSection[sectionIdx][columnIdx] count];
 }
 
-- (CGFloat)lastItemOffsetInColumn:(NSInteger)columnIdx inSection:(NSInteger)sectionIdx {
+/**
+ *  Get the last item offset y for column in section.
+ *
+ *  @param columnIdx  The column index.
+ *  @param sectionIdx The section index.
+ *
+ *  @return The last item offset y point value.
+ */
+- (CGFloat)lastItemOffsetYForColumn:(NSInteger)columnIdx inSection:(NSInteger)sectionIdx {
     NSArray *itemsInColumn = self.columnRectsInSection[sectionIdx][columnIdx];
     if (itemsInColumn.count == 0) {
         if([self.headerFooterItemAttributes[UICollectionElementKindSectionHeader] count] > sectionIdx) {
@@ -223,11 +288,18 @@
     }
 }
 
+/**
+ *  Get the preferred column cell index in the section. It's preferred which cell is shortest column height.
+ *
+ *  @param sectionIdx The section index.
+ *
+ *  @return The preferred column cell index.
+ */
 - (NSInteger)preferredColumnIndexInSection:(NSInteger)sectionIdx {
     NSUInteger shortestColumnIdx = 0;
     CGFloat heightOfShortestColumn = CGFLOAT_MAX;
     for (NSUInteger columnIdx = 0; columnIdx < [self.columnRectsInSection[sectionIdx] count]; ++columnIdx) {
-        CGFloat columnHeight = [self lastItemOffsetInColumn:columnIdx inSection:sectionIdx];
+        CGFloat columnHeight = [self lastItemOffsetYForColumn:columnIdx inSection:sectionIdx];
         if (columnHeight < heightOfShortestColumn) {
             shortestColumnIdx = columnIdx;
             heightOfShortestColumn = columnHeight;
@@ -236,6 +308,13 @@
     return shortestColumnIdx;
 }
 
+/**
+ *  Get the rectangles of the section.
+ *
+ *  @param sectionIdx The section index.
+ *
+ *  @return The rectangles of the section.
+ */
 - (CGRect)rectForSectionAtIndex:(NSInteger)sectionIdx {
     if (sectionIdx < 0 || sectionIdx >= self.sectionRects.count)
         return CGRectZero;
@@ -243,6 +322,13 @@
 }
 
 #pragma mark - Show Attributes Methods
+/**
+ *  Get the visible cells's layout attributes in collectionView's visible rectangles on the screen.
+ *
+ *  @param rect The collectionView's visible rectangles on the screen.
+ *
+ *  @return The visible layout attributes array.
+ */
 - (NSArray *)searchVisibleLayoutAttributesInRect:(CGRect)rect {
     NSMutableArray *itemAttrs = [[NSMutableArray alloc] init];
     NSIndexSet *visibleSections = [self sectionIndexesInRect:rect];
@@ -290,6 +376,13 @@
     return itemAttrs;
 }
 
+/**
+ *  Get the indexes of section in collectionView's visible rectangles on the screen.
+ *
+ *  @param rect The collectionView's visible rectangles on the screen.
+ *
+ *  @return The index set.
+ */
 - (NSIndexSet *)sectionIndexesInRect:(CGRect)rect {
     CGRect theRect = rect;
     NSMutableIndexSet *visibleIndexes = [[NSMutableIndexSet alloc] init];
@@ -305,6 +398,12 @@
 
 #pragma mark - Sticky Header implementation methods
 
+/**
+ *  Update the header layout attributes if set the sticky header property is YES.
+ *
+ *  @param attributes         The header layout atrributes
+ *  @param lastCellAttributes The last cell layout attributes
+ */
 - (void)updateHeaderAttributes:(UICollectionViewLayoutAttributes *)attributes
             lastCellAttributes:(UICollectionViewLayoutAttributes *)lastCellAttributes
 {

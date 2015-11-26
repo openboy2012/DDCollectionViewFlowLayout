@@ -14,13 +14,13 @@
 
 @required
 /**
- *  The number of column in section protocol delegate methods
+ *  The delegate method set the collectionView will flow layout as the number columns in each section.
  *
- *  @param collectionView collectionView
- *  @param layout         DDCollectionViewFlowLayout
- *  @param sectionIndex   section index
+ *  @param collectionView The effect collectionView
+ *  @param layout         The DDCollectionViewFlowLayout inilization object.
+ *  @param section        The section index
  *
- *  @return number of column
+ *  @return The number of columns in each section.
  */
 - (NSInteger)collectionView:(UICollectionView *)collectionView
                      layout:(DDCollectionViewFlowLayout *)layout
@@ -32,7 +32,9 @@
 @interface DDCollectionViewFlowLayout : UICollectionViewFlowLayout
 
 @property (nonatomic, weak) id<DDCollectionViewDelegateFlowLayout> delegate;
-
-@property (nonatomic) BOOL enableStickyHeaders; //Defalut is NO, set it's YES will sticky the section header.
+/**
+ *  Defalut is NO, set it's YES the collectionView's header will sticky on the section top.
+ */
+@property (nonatomic) BOOL enableStickyHeaders;
 
 @end

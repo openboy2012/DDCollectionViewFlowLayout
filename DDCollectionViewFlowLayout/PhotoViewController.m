@@ -98,11 +98,11 @@
 #pragma mark - UICollectionView Delegate Methods
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    return 1;
+    return 2;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    return 1;
+    return 2;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
@@ -110,17 +110,17 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(80, 80);
+    return CGSizeMake(80, [UIScreen mainScreen].bounds.size.width/4 - 2);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(self.view.bounds.size.width, 30);
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
-{
-    return CGSizeMake(self.view.bounds.size.width, 40);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+//{
+//    return CGSizeMake(self.view.bounds.size.width, 40);
+//}
 
 #pragma mark - dataSource methods
 
@@ -149,7 +149,7 @@
                 NSMutableArray *sectionItems = [NSMutableArray new];
                 for (int i = 0; i < dataList.count; i++) {
                     NSDate *date = [dataList[i] valueForProperty:ALAssetPropertyDate];
-                    if([lastDate isSameToDate:date]){
+                    if([lastDate isSameToMonth:date]){
                         NSURL *url = ((ALAsset *)dataList[i]).defaultRepresentation.url;
                         [sectionItems addObject:url];
                     }else{
@@ -158,7 +158,7 @@
                             continue;
                         }
                         NSDateFormatter *formater = [[NSDateFormatter alloc] init];
-                        [formater setDateFormat:@"yyyy-MM-dd"];
+                        [formater setDateFormat:@"yyyy-MM"];
                         [dataDict setObject:[sectionItems mutableCopy]?:@"" forKey:[formater stringFromDate:lastDate]];
                         [sectionItems removeAllObjects];
                     }

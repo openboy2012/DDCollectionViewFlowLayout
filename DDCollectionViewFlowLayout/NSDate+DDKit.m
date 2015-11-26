@@ -23,4 +23,16 @@
     return NO;
 }
 
+- (BOOL)isSameToMonth:(NSDate *)date{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSDateComponents *compsSelf = [calendar components:unitFlags fromDate:self];
+    NSDateComponents *compsOther = [calendar components:unitFlags fromDate:date];
+    if(compsSelf.year == compsOther.year &&
+       compsSelf.month == compsOther.month){
+        return YES;
+    }
+    return NO;
+}
+
 @end
