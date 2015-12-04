@@ -1,5 +1,11 @@
 language: objective-c
 osx_image: xcode7.1
+sudo: false
+
+before_install:
+  - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - cd Objective-C && pod install && cd $TRAVIS_BUILD_DIR
 
 script: 
 - xctool -project Objective-C/DDCollectionViewFlowLayout.xcodeproj -scheme DDCollectionViewFlowLayout -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.1' ONLY_ACTIVE_ARCH=NO
