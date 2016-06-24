@@ -27,6 +27,7 @@
 }
 
 @property (nonatomic, strong) ALAssetsLibrary *assetLibrary;
+@property (nonatomic, weak) IBOutlet DDCollectionViewFlowLayout *layout;
 
 @end
 
@@ -41,10 +42,11 @@
     if(!dataDict)
         dataDict = [NSMutableDictionary new];
 
-    DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
-    layout.delegate = self;
-    layout.enableStickyHeaders = YES;
-    [self.collectionView setCollectionViewLayout:layout];
+//    DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
+//    layout.delegate = self;
+//    layout.enableStickyHeaders = YES;
+//    [self.collectionView setCollectionViewLayout:layout];
+//    self.layout.enableStickyHeaders = YES;
     
     [self loadAssets];
 }

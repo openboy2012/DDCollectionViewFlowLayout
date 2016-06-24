@@ -28,13 +28,12 @@
 
 @end
 
-
 @interface DDCollectionViewFlowLayout : UICollectionViewFlowLayout
 
-@property (nonatomic, weak) id<DDCollectionViewDelegateFlowLayout> delegate;
+@property (nonatomic, weak) IBOutlet id<DDCollectionViewDelegateFlowLayout> delegate;
 /**
  *  Defalut is NO, set it's YES the collectionView's header will sticky on the section top.
  */
-@property (nonatomic) BOOL enableStickyHeaders;
+@property (nonatomic) IBInspectable BOOL enableStickyHeaders;
 
 @end

@@ -144,15 +144,15 @@
     /**
      *  Set the lineSpacing & interitemSpacing between the cells, default values is 0.0f.
      */
-    CGFloat lineSpacing = 0.0f;
-    CGFloat interitemSpacing = 0.0f;
+    CGFloat lineSpacing = self.minimumLineSpacing;
+    CGFloat interitemSpacing = self.minimumInteritemSpacing;
 
     // Check the flow layout if implementation the `collectionView:layout:minimumInteritemSpacingForSectionAtIndex:` & `collectionView:layout:minimumLineSpacingForSectionAtIndex:` protocol methods. If implementation set the lineSpacing & interitemSpacing value from the protocol methods.
-    if([self.delegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)]) {
         interitemSpacing = [self.delegate collectionView:collectionView layout:self minimumInteritemSpacingForSectionAtIndex:section];
     }
     
-    if([self.delegate respondsToSelector:@selector(collectionView:layout:minimumLineSpacingForSectionAtIndex:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:layout:minimumLineSpacingForSectionAtIndex:)]) {
         lineSpacing = [self.delegate collectionView:collectionView layout:self minimumLineSpacingForSectionAtIndex:section];
     }
     
