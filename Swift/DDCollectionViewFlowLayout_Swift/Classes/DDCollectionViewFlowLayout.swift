@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol DDCollectionViewDelegateFlowLayout : UICollectionViewDelegateFlowLayout {
-     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInsection section: Int) -> NSInteger
+     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInSection section: Int) -> NSInteger
 }
 
 class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
@@ -22,8 +22,8 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
     private var sectionInsetses = NSMutableArray()
     private var currentEdgeInsets: UIEdgeInsets = UIEdgeInsetsZero
     
-    weak var delegate : DDCollectionViewDelegateFlowLayout?
-    var enableStickyHeaders = false
+    @IBOutlet weak var delegate : DDCollectionViewDelegateFlowLayout?
+    @IBInspectable var enableStickyHeaders = false
     
     override func collectionViewContentSize() -> CGSize {
         super.collectionViewContentSize();
@@ -40,7 +40,7 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
         self.headerItemAttributes.removeAllObjects()
         self.sectionRects.removeAllObjects()
         self.columnRectsInSection.removeAllObjects()
-        for var i = 0; i < numberOfSections; ++i {
+        for i in 0 ..< numberOfSections {
             let itemsInSection = self.collectionView?.numberOfItemsInSection(i)
             self.layoutItemAttributes.addObject(NSMutableArray.init(capacity: 0))
             self.prepareLayoutInSection(i, numberOfItems: itemsInSection!)
@@ -108,8 +108,8 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
         
         self.sectionInsetses.addObject(NSValue.init(UIEdgeInsets: sectionInsets))
         
-        var interitemSpacing: CGFloat = 0.0
-        var lineSpacing: CGFloat = 0.0
+        var interitemSpacing: CGFloat = self.minimumInteritemSpacing
+        var lineSpacing: CGFloat = self.minimumLineSpacing
         
         if ((self.delegate?.collectionView?(self.collectionView!, layout: self, minimumInteritemSpacingForSectionAtIndex: index)) != nil) {
             interitemSpacing = (self.delegate?.collectionView!(self.collectionView!, layout: self, minimumInteritemSpacingForSectionAtIndex: index))!
@@ -123,21 +123,21 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
         itemsContentRect.origin.x = sectionInsets.left
         itemsContentRect.origin.y = headerHeight + sectionInsets.top
         
-        let numberOfColumns = self.delegate?.collectionView(self.collectionView!, layout: self, numberOfColumnInsection: index)
+        let numberOfColumns = self.delegate?.collectionView(self.collectionView!, layout: self, numberOfColumnInSection: index)
         itemsContentRect.size.width = (collectionView?.frame.size.width)! - (sectionInsets.left + sectionInsets.right)
         
         let columnSpace: CGFloat = itemsContentRect.size.width - (interitemSpacing * (CGFloat)(numberOfColumns! - 1))
         let columnWidth: CGFloat = columnSpace / CGFloat.init(integerLiteral:(numberOfColumns! == 0 ? 1 : numberOfColumns!))
         
         let columns = NSMutableArray.init(capacity: numberOfColumns!)
-        for var i = 0; i < numberOfColumns!; ++i {
+        for _ in 0 ..< numberOfColumns! {
             columns.addObject(NSMutableArray.init(capacity: 0))
         }
         
         self.columnRectsInSection.addObject(columns)
 
         
-        for var itemIndex = 0; itemIndex < items; ++itemIndex {
+        for itemIndex in 0 ..< items {
             let itemIndexPath = NSIndexPath.init(forItem: itemIndex, inSection: index)
             let destinationColumnIndex = self.preferredColumnIndexInSection(index)
             let destinationRowInColumn = self.numberOfItemsForColumn(destinationColumnIndex, inSection: index)
@@ -197,7 +197,7 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
     private func heightOfItemsInSection(index: Int) -> CGFloat {
         var maxHeightBetweenColumns : CGFloat = 0.0
         let columnsInSection = self.columnRectsInSection.objectAtIndex(index) as! NSArray
-        for var columnIndex = 0; columnIndex < columnsInSection.count; ++columnIndex {
+        for columnIndex in 0 ..< columnsInSection.count {
             let heightOfColumn = self.lastItemOffsetYForColumn(columnIndex, inSection: index)
             maxHeightBetweenColumns = max(maxHeightBetweenColumns, heightOfColumn)
         }
@@ -230,7 +230,7 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
         var shortestColumnIndex = 0
         var heightOfShortestColumn = CGFloat.max
         let columnRects = self.columnRectsInSection.objectAtIndex(index) as! NSArray
-        for var columnIndex = 0; columnIndex < columnRects.count; ++columnIndex {
+        for columnIndex in 0 ..< columnRects.count {
             let columnHeight = self.lastItemOffsetYForColumn(columnIndex, inSection: index)
             if columnHeight < heightOfShortestColumn {
                 heightOfShortestColumn = columnHeight
@@ -256,7 +256,7 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
         visibleSection.enumerateIndexesUsingBlock { (sectionIndex: Int, pointer: UnsafeMutablePointer<ObjCBool>) -> Void in
             
             let sectionLayoutItemAttributes = self.layoutItemAttributes.objectAtIndex(sectionIndex)
-            for var i = 0; i < sectionLayoutItemAttributes.count; i++ {
+            for i in 0 ..< sectionLayoutItemAttributes.count {
                 let layoutItemAttributes = sectionLayoutItemAttributes.objectAtIndex(i) as! UICollectionViewLayoutAttributes
                 layoutItemAttributes.zIndex = 1
                 let itemRect = layoutItemAttributes.frame
@@ -301,7 +301,7 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
     private func sectionIndexesInRect(rect: CGRect) -> NSIndexSet {
         let visibleIndexes = NSMutableIndexSet()
         let numberOfSections = self.collectionView?.numberOfSections()
-        for var index = 0; index < numberOfSections; index++ {
+        for index in 0 ..< numberOfSections! {
             let sectionRectValue = self.sectionRects.objectAtIndex(index) as! NSValue
             let sectionRect = sectionRectValue.CGRectValue()
             let isVisible = CGRectIntersectsRect(rect, sectionRect)

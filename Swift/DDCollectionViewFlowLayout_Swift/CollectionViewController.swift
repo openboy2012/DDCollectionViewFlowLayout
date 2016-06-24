@@ -13,6 +13,7 @@ private let reuseIdentifier = "Cell"
 class CollectionViewController: UICollectionViewController, DDCollectionViewDelegateFlowLayout {
 
     var sizes = NSMutableArray()
+//    @IBOutlet var layout: DDCollectionViewFlowLayout?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,16 +23,17 @@ class CollectionViewController: UICollectionViewController, DDCollectionViewDele
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        let layout = DDCollectionViewFlowLayout()
-        layout.delegate = self
-        layout.enableStickyHeaders = true
+//        let layout = DDCollectionViewFlowLayout()
+//        layout.delegate = self
+//        layout.enableStickyHeaders = true
         
         sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 120)))
         sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 90)))
         sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 80)))
         sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 110)))
         
-        self.collectionView!.setCollectionViewLayout(layout, animated: false)
+//        self.collectionView!.setCollectionViewLayout(layout, animated: false)
+//        layout!.enableStickyHeaders = true
 
         // Do any additional setup after loading the view.
     }
@@ -72,7 +74,7 @@ class CollectionViewController: UICollectionViewController, DDCollectionViewDele
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInsection section: Int) -> NSInteger {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInSection section: Int) -> NSInteger {
         return 3
     }
     
