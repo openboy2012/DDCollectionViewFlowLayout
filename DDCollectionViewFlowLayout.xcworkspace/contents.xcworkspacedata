@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Swift/DDCollectionViewFlowLayout_Swift.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Objective-C/DDCollectionViewFlowLayout.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>
