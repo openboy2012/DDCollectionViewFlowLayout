@@ -4,8 +4,8 @@ you can custom the header & footer, you also can custom the UICollectionViewCell
 now, you can set header sticky on the top when you scroll the collectionView in version 0.5. 
 
 ##Effects
-<img src="http://ipa-download.qiniudn.com/effect1.gif" width="276"/>
-<img src="http://ipa-download.qiniudn.com/effect2.gif" width="276"/>
+<img src="http://7fvget.com1.z0.glb.clouddn.com/effect1.gif" width="276"/>
+<img src="http://7fvget.com1.z0.glb.clouddn.com/effect2.gif" width="276"/>
 
 ##Installation
 
