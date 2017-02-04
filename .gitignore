@@ -16,3 +16,4 @@ xcuserdata
 DerivedData
 .idea/
 
+Podfile.lock
