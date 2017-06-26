@@ -42,7 +42,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];
     layout.delegate = self;
-    layout.enableStickyHeaders = YES;
+    layout.enableStickyHeaders = NO;
     [self.collectionView setCollectionViewLayout:layout];
 }
 
@@ -64,7 +64,7 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 2;
+    return 4;
 }
 
 
@@ -75,14 +75,38 @@ static NSString * const reuseIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
+    if (indexPath.section == 2)
+    {
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.contentView.layer.borderColor = [UIColor grayColor].CGColor;
+        cell.contentView.layer.borderWidth = 1.0/[UIScreen mainScreen].scale;
+//        UITableViewCell *cell = [[UITableViewCell alloc] init];
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        [cell.contentView addSubview:cell.accessoryView];
+    }
+    else{
     // Configure the cell
-    cell.backgroundColor = [UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:rand()%255/255.0 green:rand()%255/255.0 blue:rand()%255/255.0 alpha:1.0];
+    }
     return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)layout numberOfColumnsInSection:(NSInteger)section
 {
+    if (section == 2)
+    {
+        return 1;
+    }
     return 3;
+}
+
+- (UIColor *)collectionView:(UICollectionView *)collectionView layout:(DDCollectionViewFlowLayout *)collectionViewLayout backgroundColorForSectionAtIndex:(NSInteger)section
+{
+    if (section == 2)
+    {
+        return [UIColor greenColor];
+    }
+    return [UIColor redColor];
 }
 
 #pragma mark <UICollectionViewDelegate>
@@ -139,6 +163,10 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2)
+    {
+        return CGSizeMake(self.view.bounds.size.width, 44.0f);
+    }
     return [[sizes objectAtIndex:indexPath.row % 4] CGSizeValue];
 }
 

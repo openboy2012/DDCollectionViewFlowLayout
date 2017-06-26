@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D0817A81F012086001F5797 /* UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0817A71F012086001F5797 /* UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.m */; };
 		0D3242A61C1128680029C51B /* DemoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3242A51C1128680029C51B /* DemoTableViewController.m */; };
 		0D875D7B1C1091E900F00EE1 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D875D7A1C1091E900F00EE1 /* CollectionViewController.m */; };
 		0DAF199E1BF4481E007359C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF199D1BF4481E007359C1 /* Images.xcassets */; };
@@ -35,6 +36,8 @@
 
 /* Begin PBXFileReference section */
 		07D9B073B5E4F1700F3E7F9C /* libPods-DDCollectionViewFlowLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DDCollectionViewFlowLayout.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D0817A61F012086001F5797 /* UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.h"; sourceTree = "<group>"; };
+		0D0817A71F012086001F5797 /* UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.m"; sourceTree = "<group>"; };
 		0D3242A41C1128680029C51B /* DemoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoTableViewController.h; sourceTree = "<group>"; };
 		0D3242A51C1128680029C51B /* DemoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoTableViewController.m; sourceTree = "<group>"; };
 		0D875D791C1091E900F00EE1 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
@@ -177,6 +180,8 @@
 			children = (
 				8E65653D1A8C41410028E793 /* DDCollectionViewFlowLayout.h */,
 				8E65653E1A8C41410028E793 /* DDCollectionViewFlowLayout.m */,
+				0D0817A61F012086001F5797 /* UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.h */,
+				0D0817A71F012086001F5797 /* UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				TargetAttributes = {
 					8E6565121A8C40610028E793 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = F76XM9QFY9;
 					};
 					8E65652B1A8C40610028E793 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -323,7 +329,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -337,6 +343,7 @@
 				8E65653F1A8C41410028E793 /* DDCollectionViewFlowLayout.m in Sources */,
 				CAAA4BD31B05B89800521517 /* NSDate+DDKit.m in Sources */,
 				8E65651F1A8C40610028E793 /* PhotoViewController.m in Sources */,
+				0D0817A81F012086001F5797 /* UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.m in Sources */,
 				CA85E4D81B055DB000B43ADA /* WaterfallViewController.m in Sources */,
 				0D875D7B1C1091E900F00EE1 /* CollectionViewController.m in Sources */,
 				8E65651C1A8C40610028E793 /* AppDelegate.m in Sources */,
@@ -465,8 +472,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = F76XM9QFY9;
 				INFOPLIST_FILE = DDCollectionViewFlowLayout/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ddkit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -481,8 +489,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = F76XM9QFY9;
 				INFOPLIST_FILE = DDCollectionViewFlowLayout/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ddkit.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

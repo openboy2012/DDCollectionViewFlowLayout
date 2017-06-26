@@ -21,16 +21,16 @@ class CollectionViewController: UICollectionViewController, DDCollectionViewDele
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
 //        let layout = DDCollectionViewFlowLayout()
 //        layout.delegate = self
 //        layout.enableStickyHeaders = true
         
-        sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 120)))
-        sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 90)))
-        sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 80)))
-        sizes.addObject(NSValue.init(CGSize: CGSizeMake(100, 110)))
+        sizes.add(NSValue.init(cgSize: CGSize(width: 100, height: 120)))
+        sizes.add(NSValue.init(cgSize: CGSize(width: 100, height: 90)))
+        sizes.add(NSValue.init(cgSize: CGSize(width: 100, height: 80)))
+        sizes.add(NSValue.init(cgSize: CGSize(width: 100, height: 110)))
         
 //        self.collectionView!.setCollectionViewLayout(layout, animated: false)
 //        layout!.enableStickyHeaders = true
@@ -55,32 +55,32 @@ class CollectionViewController: UICollectionViewController, DDCollectionViewDele
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 2
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return 30
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     
         // Configure the cell
-        cell.backgroundColor = UIColor.init(red: CGFloat.init(random() % 255) / CGFloat.init(255), green: CGFloat.init(random() % 255) / CGFloat.init(255), blue: CGFloat.init(random() % 255) / CGFloat.init(255), alpha: 1.0)
+        cell.backgroundColor = UIColor.init(red: CGFloat.init(arc4random() % 255) / CGFloat.init(255), green: CGFloat.init(arc4random() % 255) / CGFloat.init(255), blue: CGFloat.init(arc4random() % 255) / CGFloat.init(255), alpha: 1.0)
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInSection section: Int) -> NSInteger {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInSection section: Int) -> NSInteger {
         return 3
     }
     
-    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if (kind == UICollectionElementKindSectionHeader){
-            let header = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader , withReuseIdentifier: "header", forIndexPath: indexPath)
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader , withReuseIdentifier: "header", for: indexPath)
             header.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0 , alpha: 0.75)
             return header
         }
@@ -118,24 +118,24 @@ class CollectionViewController: UICollectionViewController, DDCollectionViewDele
     }
     */
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let size = self.sizes.objectAtIndex(indexPath.row % 4) as! NSValue
-        return size.CGSizeValue()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size = self.sizes.object(at: indexPath.row % 4) as! NSValue
+        return size.cgSizeValue
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(2, 2, 2, 2)
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSizeMake(self.view.bounds.width, 30)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: self.view.bounds.width, height: 30)
     }
 }

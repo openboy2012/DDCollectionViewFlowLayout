@@ -7,6 +7,26 @@
 //
 
 #import "DDCollectionViewFlowLayout.h"
+#import "UICollectionViewLayoutAttributes+DDCollectionViewFlowLayout.h"
+
+#define DDBackgroundAttributesIdentifier @"DDBackgroundAttributesIdentifier"
+
+/**
+ Define the background reusable view class
+ */
+@interface DDCollectionViewBackgroundView : UICollectionReusableView
+
+@end
+
+@implementation DDCollectionViewBackgroundView
+
+// Override the applyLayoutAttributes method, set the background color use the attributes color.
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
+{
+    self.backgroundColor = layoutAttributes.dd_backgroundColor;
+}
+
+@end
 
 @interface DDCollectionViewFlowLayout()
 
@@ -35,6 +55,11 @@
  */
 @property (nonatomic) UIEdgeInsets currentEdgeInsets;
 
+/**
+ The attributes array, to store the backgroundView attributes if the delegate set the custome color.
+ */
+@property (nonatomic, strong) NSMutableArray *backgroundAttributes;
+
 @end
 
 @implementation DDCollectionViewFlowLayout
@@ -52,10 +77,14 @@
 
 - (void)prepareLayout {
     
+    // regist the background view class
+    [self registerClass:[DDCollectionViewBackgroundView class] forDecorationViewOfKind:DDBackgroundAttributesIdentifier];
+    
     NSUInteger numberOfSections = self.collectionView.numberOfSections;
     self.sectionRects = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     self.columnRectsInSection = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     self.layoutItemAttributes = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
+    self.backgroundAttributes = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     self.sectionInsetses = [[NSMutableArray alloc] initWithCapacity:numberOfSections];
     self.headerFooterItemAttributes = @{UICollectionElementKindSectionHeader:[NSMutableArray array], UICollectionElementKindSectionFooter:[NSMutableArray array]};
     
@@ -233,6 +262,15 @@
     }
     
     sectionRect.size.height = itemsContentRect.size.height + footerHeight;
+    
+    if ([self.delegate respondsToSelector:@selector(collectionView:layout:backgroundColorForSectionAtIndex:)]) {
+        UIColor *color = [self.delegate collectionView:self.collectionView layout:self backgroundColorForSectionAtIndex:section];
+        UICollectionViewLayoutAttributes *backgroundAttributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:DDBackgroundAttributesIdentifier withIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
+        backgroundAttributes.frame = sectionRect;
+        backgroundAttributes.zIndex = -1;
+        backgroundAttributes.dd_backgroundColor = color;
+        [self.backgroundAttributes addObject:backgroundAttributes];
+    }
 
     [self.sectionRects addObject:[NSValue valueWithCGRect:sectionRect]];
 }
@@ -333,6 +371,15 @@
     NSMutableArray *itemAttrs = [[NSMutableArray alloc] init];
     NSIndexSet *visibleSections = [self sectionIndexesInRect:rect];
     [visibleSections enumerateIndexesUsingBlock:^(NSUInteger sectionIdx, BOOL *stop) {
+        
+        // Check the background attributes if show in visiable rectangles.
+        for (UICollectionViewLayoutAttributes *itemAttr in self.backgroundAttributes)
+        {
+            CGRect itemRect = itemAttr.frame;
+            BOOL isVisible = CGRectIntersectsRect(rect, itemRect);
+            if (isVisible)
+                [itemAttrs addObject:itemAttr];
+        }
         
         // Check item layout attributes's rectangles if intersectes the collectionView's rectangles.
         for (UICollectionViewLayoutAttributes *itemAttr in self.layoutItemAttributes[sectionIdx]) {
