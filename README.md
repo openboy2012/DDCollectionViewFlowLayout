@@ -3,11 +3,11 @@ a CollectionViewFlowLayout implement the Waterfall Effect, it's also supported m
 you can custom the header & footer, you also can custom the UICollectionViewCell.   
 now, you can set header sticky on the top when you scroll the collectionView in version 0.5. 
 
-##Effects
+## Effects
 Please clicked this [link](http://ipa-download.qiniudn.com/effect1.gif) to see effect one    
 Please clicked this [link](http://ipa-download.qiniudn.com/effect2.gif) to see effect two
 
-##Installation
+## Installation
 
 [![Build Status](https://travis-ci.org/openboy2012/DDCollectionViewFlowLayout.svg?branch=master)](https://travis-ci.org/openboy2012/DDCollectionViewFlowLayout)&nbsp;
 [![Version](http://cocoapod-badges.herokuapp.com/v/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)&nbsp;[![Platform](http://cocoapod-badges.herokuapp.com/p/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)   
