@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="8Yy-Ig-5fR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="8Yy-Ig-5fR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,7 +14,7 @@
             <objects>
                 <navigationController id="8Yy-Ig-5fR" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="5DG-x0-MZY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
@@ -98,7 +98,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vTT-x1-iEm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-97" y="-172"/>
+            <point key="canvasLocation" x="-90" y="-314"/>
         </scene>
         <!--Demo Table View Controller-->
         <scene sceneID="lrW-gG-Fps">
@@ -128,6 +128,7 @@
                         <segue destination="aJz-e2-7Hj" kind="push" identifier="Photo Wall" id="tTw-R5-H2u"/>
                         <segue destination="bRd-bd-QfJ" kind="push" identifier="Photo Waterfall" id="OXP-E4-DdD"/>
                         <segue destination="SG6-Om-jPd" kind="push" identifier="Dynamic Collection View" id="A8i-y7-rCI"/>
+                        <segue destination="bh1-eJ-bJs" kind="push" identifier="Other Demo" id="298-K5-IxN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8NS-Wc-xfA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -251,10 +252,63 @@
             </objects>
             <point key="canvasLocation" x="-18" y="553"/>
         </scene>
+        <!--Other Demo View Controller-->
+        <scene sceneID="ctu-51-Y6X">
+            <objects>
+                <viewController id="bh1-eJ-bJs" customClass="OtherDemoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="X5h-mD-ZRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="aNC-js-4HF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ykf-eb-4BL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ewC-zY-9lk">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LN8-sZ-Mi4">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OtherDemoCell" id="uqd-kN-KRM">
+                                        <rect key="frame" x="0.0" y="50" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OtherHeader" id="M85-kk-hwE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="bh1-eJ-bJs" id="Nsx-tQ-c9e"/>
+                                    <outlet property="delegate" destination="bh1-eJ-bJs" id="UzN-kx-wQe"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ewC-zY-9lk" firstAttribute="top" secondItem="X5h-mD-ZRb" secondAttribute="bottom" id="HsQ-pl-yjn"/>
+                            <constraint firstAttribute="trailing" secondItem="ewC-zY-9lk" secondAttribute="trailing" id="SFR-6n-Jk7"/>
+                            <constraint firstItem="aNC-js-4HF" firstAttribute="top" secondItem="ewC-zY-9lk" secondAttribute="bottom" id="YDI-se-2aF"/>
+                            <constraint firstItem="ewC-zY-9lk" firstAttribute="leading" secondItem="Ykf-eb-4BL" secondAttribute="leading" id="iIz-aU-0fe"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="nSG-Ar-QlV"/>
+                    <connections>
+                        <outlet property="collectionView" destination="ewC-zY-9lk" id="Mlv-9r-7RF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MGj-iF-JqX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="416.5" y="90.5"/>
+        </scene>
     </scenes>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

@@ -26,7 +26,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.title = @"Demo";
     
-    self.demoItems = @[@"Photo Wall",@"Photo Waterfall",@"Dynamic Collection View"];
+    self.demoItems = @[@"Photo Wall",@"Photo Waterfall",@"Dynamic Collection View", @"Other Demo"];
 }
 
 - (void)didReceiveMemoryWarning {

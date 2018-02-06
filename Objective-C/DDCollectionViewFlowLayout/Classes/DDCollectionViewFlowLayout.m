@@ -137,7 +137,7 @@
     CGFloat headerHeight = 0.0f;
     
     // Check the flow layout if implementation the `collectionView:layout:referenceSizeForHeaderInSection:` protocol method. If not implementation pass the header initilaztion.
-    if([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
+    if ([self.delegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)]) {
         
         // Initialize the header rectangles.
         CGRect headerFrame;
@@ -394,7 +394,7 @@
         if ([self.headerFooterItemAttributes[UICollectionElementKindSectionFooter] count] > sectionIdx) {
             UICollectionViewLayoutAttributes *footerAttribute = self.headerFooterItemAttributes[UICollectionElementKindSectionFooter][sectionIdx];
             BOOL isVisible = CGRectIntersectsRect(rect, footerAttribute.frame);
-            if (isVisible && footerAttribute)
+            if (isVisible && footerAttribute && footerAttribute.frame.size.height > 0.0f)
                 [itemAttrs addObject:footerAttribute];
             self.currentEdgeInsets = UIEdgeInsetsZero;
         } else {
@@ -405,18 +405,26 @@
         if([self.headerFooterItemAttributes[UICollectionElementKindSectionHeader] count] > sectionIdx) {
             UICollectionViewLayoutAttributes *headerAttribute = self.headerFooterItemAttributes[UICollectionElementKindSectionHeader][sectionIdx];
             
+            // Check the header if sticky
             if (!self.enableStickyHeaders) {
                 BOOL isVisibleHeader = CGRectIntersectsRect(rect, headerAttribute.frame);
                 
                 if (isVisibleHeader && headerAttribute)
                     [itemAttrs addObject:headerAttribute];
             } else {
+                // Get the last display attributes.
                 UICollectionViewLayoutAttributes *lastCell = [itemAttrs lastObject];
                 
-                if(headerAttribute)
-                   [itemAttrs addObject:headerAttribute];
-                
-                [self updateHeaderAttributes:headerAttribute lastCellAttributes:lastCell];
+                BOOL isVisibleHeader = CGRectIntersectsRect(rect, headerAttribute.frame);
+                if (isVisibleHeader && headerAttribute) {
+                    [itemAttrs addObject:headerAttribute];
+                    
+                    // Fixed the bug about when the header attribute is out of the visiable rectangles.
+                    // lastCell can't be the same header attribute.
+                    if (lastCell.representedElementKind != UICollectionElementKindSectionHeader) {
+                        [self updateHeaderAttributes:headerAttribute lastCellAttributes:lastCell];
+                    }
+                }
             }
         }
     }];

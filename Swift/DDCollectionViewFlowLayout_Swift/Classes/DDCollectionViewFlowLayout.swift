@@ -9,27 +9,30 @@
 import UIKit
 
 @objc protocol DDCollectionViewDelegateFlowLayout : UICollectionViewDelegateFlowLayout {
-     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInSection section: Int) -> NSInteger
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, numberOfColumnInSection section: Int) -> NSInteger
+    
+    
+    @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: DDCollectionViewFlowLayout, backgroundColorForSectionAtIndex index: Int) -> UIColor
 }
 
 class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
-    
     fileprivate var sectionRects = NSMutableArray()
     fileprivate var columnRectsInSection = NSMutableArray()
     fileprivate var layoutItemAttributes = NSMutableArray()
     fileprivate var headerItemAttributes = NSMutableArray()
     fileprivate var footerItemAttributes = NSMutableArray()
     fileprivate var sectionInsetses = NSMutableArray()
+    fileprivate var backgroundColorAttributes = NSMutableArray()
     fileprivate var currentEdgeInsets: UIEdgeInsets = UIEdgeInsets.zero
     
     @IBOutlet weak var delegate : DDCollectionViewDelegateFlowLayout?
     @IBInspectable var enableStickyHeaders = false
     
     override var collectionViewContentSize : CGSize {
-        super.collectionViewContentSize
+        var lastSize = super.collectionViewContentSize
         
         let lastSectionRect = (sectionRects.lastObject! as AnyObject).cgRectValue
-        let lastSize = CGSize(width: (self.collectionView?.bounds.width)!, height: (lastSectionRect?.maxY)!)
+        lastSize = CGSize(width: (self.collectionView?.bounds.width)!, height: (lastSectionRect?.maxY)!)
         return lastSize
     }
     
@@ -39,6 +42,7 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
         self.footerItemAttributes.removeAllObjects()
         self.headerItemAttributes.removeAllObjects()
         self.sectionRects.removeAllObjects()
+        self.backgroundColorAttributes.removeAllObjects()
         self.columnRectsInSection.removeAllObjects()
         for i in 0 ..< numberOfSections {
             let itemsInSection = self.collectionView?.numberOfItems(inSection: i)
@@ -285,7 +289,9 @@ class DDCollectionViewFlowLayout : UICollectionViewFlowLayout {
                     
                     itemAttrs.add(headerLayoutAttributes)
                     
-                    self.updateTheHeaderLayoutAttributes(headerLayoutAttributes, lastItemAttributes: lastItemAttributes)
+                    if lastItemAttributes.representedElementKind != UICollectionElementKindSectionHeader {
+                        self.updateTheHeaderLayoutAttributes(headerLayoutAttributes, lastItemAttributes: lastItemAttributes)
+                    }
                     
                 } else {
                     let isVisible = rect.intersects(headerLayoutAttributes.frame)

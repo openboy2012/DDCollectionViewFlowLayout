@@ -12,6 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class CollectionViewController: UICollectionViewController, DDCollectionViewDelegateFlowLayout {
 
+
     var sizes = NSMutableArray()
 //    @IBOutlet var layout: DDCollectionViewFlowLayout?
     override func viewDidLoad() {
