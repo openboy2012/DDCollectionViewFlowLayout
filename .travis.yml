@@ -7,4 +7,4 @@ before_install:
   - pod install && cd $TRAVIS_BUILD_DIR
 
 script:
-- xcodebuild -workspace DDCollectionViewFlowLayout.xcworkspace -scheme DDCollectionViewFlowLayout -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1' -enableCodeCoverage YES
+- xcodebuild -workspace DDCollectionViewFlowLayout.xcworkspace -scheme DDCollectionViewFlowLayout -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.1'
