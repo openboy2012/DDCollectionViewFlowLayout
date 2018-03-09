@@ -10,7 +10,9 @@ Please clicked this [link](http://ipa-download.qiniudn.com/effect2.gif) to see e
 ## Installation
 
 [![Build Status](https://travis-ci.org/openboy2012/DDCollectionViewFlowLayout.svg?branch=master)](https://travis-ci.org/openboy2012/DDCollectionViewFlowLayout)&nbsp;
-[![Version](http://cocoapod-badges.herokuapp.com/v/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)&nbsp;[![Platform](http://cocoapod-badges.herokuapp.com/p/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)   
+[![Version](http://cocoapod-badges.herokuapp.com/v/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)&nbsp;
+[![Platform](http://cocoapod-badges.herokuapp.com/p/DDCollectionViewFlowLayout/badge.png)](http://cocoadocs.org/docsets/DDCollectionViewFlowLayout/)&nbsp;
+[![codebeat badge](https://codebeat.co/badges/3d96e633-e203-410b-b2e4-56d2b176f0f8)](https://codebeat.co/projects/github-com-openboy2012-ddcollectionviewflowlayout-master)   
 DDCollectionViewFlowLayout is available through [CocoaPods](http://cocoapods.org), to install
 it simply add the following line to your Podfile:
 
